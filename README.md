@@ -13,19 +13,19 @@ Build a hero based walking on tiles and killing monsters type of game. The hero 
 When monster and hero occupy the same cell, you can perform an attack by pressing "Space".
 
 ### Hero
-Face up ![Hero Face Up](https://github.com/nguyenannie/Role_Playing_Game/blob/master/src/resources/images/hero-up.gif)
-Face Down ![Hero Face Down](https://github.com/nguyenannie/Role_Playing_Game/blob/master/src/resources/images/hero-down.gif)
-Face Left ![Hero Face Left](https://github.com/nguyenannie/Role_Playing_Game/blob/master/src/resources/images/hero-left.gif)
-Face Right ![Hero Face Right](https://github.com/nguyenannie/Role_Playing_Game/blob/master/src/resources/images/hero-right.gif)
+Face up ![Hero Face Up](src/main/resources/images/hero-up.gif)
+Face Down ![Hero Face Down](src/main/resources/images/hero-down.gif)
+Face Left ![Hero Face Left](src/main/resources/images/hero-left.gif)
+Face Right ![Hero Face Right](src/main/resources/images/hero-right.gif)
 
 ### Boss Monster
-![Boss Monster](https://github.com/nguyenannie/Role_Playing_Game/blob/master/src/resources/images/boss.png)
+![Boss Monster](src/main/resources/images/boss.png)
 
 ### Monster
-![Monster](https://github.com/nguyenannie/Role_Playing_Game/blob/master/src/resources/images/monster.gif)
+![Monster](src/main/resources/images/monster.gif)
 
 ### Wall
-![Wall](https://github.com/nguyenannie/Role_Playing_Game/blob/master/src/resources/images/wall.jpg)
+![Wall](src/main/resources/images/wall.jpg)
 
 ### Game Screenshot
-![Game Screenshot](https://github.com/nguyenannie/Role_Playing_Game/blob/master/src/resources/images/Game_Screenshot.png)
+![Game Screenshot](src/main/resources/images/Game_Screenshot.png)
