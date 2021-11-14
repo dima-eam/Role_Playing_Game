@@ -19,8 +19,8 @@ public class Map {
         mapData = new ArrayList<>();
         getMapData();
 
-        Tile wall = new Tile("wall.gif",true);
-        Tile floor = new Tile("floor.gif",false);
+        Tile wall = new Tile("/image/wall.gif",true);
+        Tile floor = new Tile("/image/floor.gif",false);
 
         for(int i = 0; i < 10; i ++){
             for(int j = 0; j < 11; j ++){
@@ -44,7 +44,7 @@ public class Map {
 
     public Tile getTile(int x, int y){
         if(x < 0 || x > 9 || y < 0 || y > 10) {
-            return new Tile("wall.gif",true);
+            return new Tile("/image/wall.gif",true);
         } else {
             return tiles[x][y];
         }

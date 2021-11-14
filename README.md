@@ -9,6 +9,9 @@ Build a hero based walking on tiles and killing monsters type of game. The hero 
 - Move right :arrow_right: or :d:
 - Move left :arrow_left: or :a:
 
+### Attack
+When monster and hero occupy the same cell, you can perform an attack by pressing "Space".
+
 ### Hero
 Face up ![Hero Face Up](https://github.com/nguyenannie/Role_Playing_Game/blob/master/src/resources/images/hero-up.gif)
 Face Down ![Hero Face Down](https://github.com/nguyenannie/Role_Playing_Game/blob/master/src/resources/images/hero-down.gif)

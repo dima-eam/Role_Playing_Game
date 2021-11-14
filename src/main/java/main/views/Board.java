@@ -16,11 +16,12 @@ import static main.models.Tile.TILE_SIZE;
 
 public class Board extends JPanel implements ActionListener {
 
+    private static final int DELAY = 100;
+
     private GameController controller;
     private DrawStat drawStat;
     private DrawCharacter drawCharacter;
     private DrawMaze drawMaze;
-    private final int DELAY = 100;
 
     public Board() {
         initBoard();
