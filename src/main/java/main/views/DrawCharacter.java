@@ -16,8 +16,7 @@ public class DrawCharacter implements Drawable {
 
     @Override
     public void draw(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(character.getImage(), character.getX() * STEP, character.getY() * STEP, null);
+        g.drawImage(character.getImage(), character.getX() * STEP, character.getY() * STEP, null);
     }
 
 }

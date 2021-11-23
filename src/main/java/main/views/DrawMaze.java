@@ -19,8 +19,7 @@ public class DrawMaze implements Drawable {
     public void draw(Graphics g) {
         for(int i = 0; i < MAZE_WIDTH; i ++) {
             for (int j = 0; j < MAZE_HEIGHT; j ++) {
-                Graphics2D g2d = (Graphics2D) g;
-                g2d.drawImage(maze.getTile(i,j).orElse(FLOOR).getTileType(),
+                g.drawImage(maze.getTile(i,j).orElse(FLOOR).getTileType(),
                         i * Tile.TILE_SIZE,
                         j * Tile.TILE_SIZE,
                         null);
