@@ -1,18 +1,22 @@
-package main.views;
+package org.eam.games.wanderer.ui;
 
-import main.controllers.GameController;
-import main.models.Hero;
-import main.models.Monster;
-import main.TKWanderer;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import org.eam.games.wanderer.engine.GameController;
+import org.eam.games.wanderer.drawable.Drawable;
+import org.eam.games.wanderer.actor.Player;
+import org.eam.games.wanderer.actor.Monster;
 
-import java.awt.*;
-
-public class DrawStat implements Drawable {
+/**
+ * Represents heads-up display with game statistics etc.
+ */
+public class Hud implements Drawable {
 
     private static final int STAT_WIDTH = 330;
     private static final int STAT_HEIGHT = 20;
     private static final int STAT_SIZE = 15;
-    private static final int STAT_POSX = TKWanderer.SCREEN_WIDTH - STAT_WIDTH;
+    private static final int STAT_POSX = 500 - STAT_WIDTH;
     private static final int STAT_HERO_POSY = 15;
     private static final int STAT_MONSTER_POSY = STAT_HERO_POSY + STAT_HEIGHT;
     private static final int STAT_BOX_POSX = STAT_POSX - 5;
@@ -44,32 +48,33 @@ public class DrawStat implements Drawable {
         g.fillRect(STAT_BOX_POSX, STAT_BOX_POSY, STAT_BOX_WIDTH, STAT_BOX_HEIGHT);
         g.setColor(Color.black);
 
-        if(gameController.getHero().isDead()) {
+        if (gameController.getHero().dead()) {
             gameOver(g);
         } else {
-            Hero hero = gameController.getHero();
-            statusTextHero = "Hero(Level_" + hero.getLevel()
-                    + ")HP:" + hero.healthPoint
-                    + "/" + hero.maxHealthPoint
-                    + "|SP:" + hero.strikePoint
-                    + "|DP:"+ hero.defendPoint;
+            Player player = gameController.getHero();
+//            statusTextHero ="";
+//                "Hero(" + player.getLevel() + ")" +
+//                    "HP:" + player.healthPoint + "/" + player.maxHealthPoint +
+//                    "|SP:" + player.strikePoint +
+//                    "|DP:" + player.defendPoint +
+//                    "|POS:" + player.x + ", " + player.y;
 
-            for(Monster monster : gameController.getMonsterList()){
-                if(hero.x == monster.x && hero.y == monster.y){
-                    statusTextMonster = "Monster(Level_" + monster.getLevel() + ")HP:"
-                            + monster.healthPoint + "/" + monster.maxHealthPoint
-                            + "|SP:" + monster.strikePoint
-                            + "|DP:"+ monster.defendPoint;
-                }
+            for (Monster monster : gameController.getMonsterList()) {
+//                if (player.x == monster.x && player.y == monster.y) {
+//                    statusTextMonster = "Monster(Level_" + monster.getLevel() + ")HP:"
+//                        + monster.healthPoint + "/" + monster.maxHealthPoint
+//                        + "|SP:" + monster.strikePoint
+//                        + "|DP:" + monster.defendPoint;
+//                }
             }
         }
 
         g.drawString(statusTextHero, STAT_POSX, STAT_HERO_POSY);
 
-        if(statusTextMonster.length() > 0) {
+        if (statusTextMonster.length() > 0) {
             g.setColor(Color.white);
             g.fillRect(STAT_BOX_POSX, STAT_BOX_POSY + STAT_BOX_HEIGHT,
-                    STAT_BOX_WIDTH, STAT_BOX_HEIGHT);
+                STAT_BOX_WIDTH, STAT_BOX_HEIGHT);
         }
 
         g.setColor(Color.black);
