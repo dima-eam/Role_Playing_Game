@@ -1,9 +1,11 @@
 package org.eam.games.wanderer.engine;
 
+import java.util.function.Predicate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.eam.games.wanderer.actor.Direction;
 import org.eam.games.wanderer.world.Cell;
+import org.eam.games.wanderer.world.Tile;
 import org.eam.games.wanderer.world.World;
 
 /**
@@ -11,16 +13,17 @@ import org.eam.games.wanderer.world.World;
  * instances have no knowledge about what exactly is being tracked, the control is performed externally.
  */
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Position {
+public class Movement {
 
     private final Cell current;
+    private final Predicate<Tile> canPass = tile -> !tile.isSolid();
     private Direction direction;
 
     /**
      * Initial position in upper-left corner, face down.
      */
-    public static Position start() {
-        return new Position(new Cell(0, 0), Direction.DOWN);
+    public static Movement start() {
+        return new Movement(new Cell(0, 0), Direction.DOWN);
     }
 
     /**
@@ -49,8 +52,9 @@ public class Position {
             case LEFT -> current.moveLeft();
             case RIGHT -> current.moveRight();
         };
-        world.possbileMove(newCell)
-            .ifPresent(current::move);
+        world.tileForCell(newCell)
+            .filter(canPass)
+            .ifPresent(t -> current.move(newCell));
     }
 
     /**

@@ -3,7 +3,7 @@ package org.eam.games.wanderer.drawable;
 import java.awt.Graphics;
 import lombok.AllArgsConstructor;
 import org.eam.games.wanderer.actor.Actor;
-import org.eam.games.wanderer.engine.Position;
+import org.eam.games.wanderer.engine.Movement;
 
 /**
  * Controls any actor (moving entity) drawing logic. Each actor has its current position and fixed step, controlling how
@@ -14,15 +14,15 @@ public class ActorDrawable implements Drawable {
 
     private final Actor actor;
     private final int step;
-    private final Position position;
+    private final Movement movement;
 
     /**
      * @inheritDoc
      */
     @Override
     public void draw(Graphics g) {
-        g.drawImage(actor.imageForDirection(position.direction()),
-            position.xTile() * step, position.yTile() * step,
+        g.drawImage(actor.imageForDirection(movement.direction()),
+            movement.xTile() * step, movement.yTile() * step,
             null);
     }
 

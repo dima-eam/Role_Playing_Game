@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.eam.games.wanderer.drawable.Drawable;
 import org.eam.games.wanderer.engine.Camera;
-import org.eam.games.wanderer.properties.GameProperties;
 
 /**
  * Controls all graphics in the game, utilizing {@link javax.swing.JComponent#paintComponent(Graphics)} functionality,
@@ -32,11 +31,11 @@ public class Display extends JPanel {
         drawGame(g);
 
         // baseline was 0-1 millis
-        log.trace("World painted: elapsedMs={}", started.elapsed(TimeUnit.MILLISECONDS));
+        log.trace("World painted: elapsedMs={}", () -> started.elapsed(TimeUnit.MILLISECONDS));
     }
 
     private void drawGame(Graphics g) {
-//        g = camera.translate(g);
+        g = camera.translate(g);
 
         world.draw(g);
         hero.draw(g);

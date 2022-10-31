@@ -11,6 +11,7 @@ import org.eam.games.wanderer.ui.Hud;
  * pre-generated game world ("Maze"), and keyboard events processor.
  */
 @Log4j2
+@Deprecated(forRemoval = true)
 public class GameEngine {
 
     /**

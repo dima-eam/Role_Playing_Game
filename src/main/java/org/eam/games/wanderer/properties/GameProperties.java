@@ -1,6 +1,7 @@
 package org.eam.games.wanderer.properties;
 
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.annotation.Nonnull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -37,9 +38,11 @@ public class GameProperties {
     /**
      * Creates properties instance with default tiles count and tiles size.
      */
-    public static GameProperties from(Dimension screenSize) {
+    public static GameProperties defaults() {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
         int boundLeft = screenSize.width / 2;
-        int boundRight = DEFAULT_HEIGHT_IN_TILES * DEFAULT_TILE_SIZE - screenSize.width / 2;
+        int boundRight = DEFAULT_WIDTH_IN_TILES * DEFAULT_TILE_SIZE - screenSize.width / 2;
         int boundTop = screenSize.height / 2;
         int boundBottom = DEFAULT_HEIGHT_IN_TILES * DEFAULT_TILE_SIZE - screenSize.height / 2;
 
