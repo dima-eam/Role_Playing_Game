@@ -8,8 +8,8 @@ import java.awt.Graphics;
 public interface Drawable {
 
     /**
-     * Passes the graphics context to draw/redraw an antity.
+     * Passes the graphics context to draw/redraw an entity.
      */
-    void draw(Graphics g);
+    void draw(GraphicsContext context);
 
 }

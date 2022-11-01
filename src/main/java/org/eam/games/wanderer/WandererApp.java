@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import lombok.extern.log4j.Log4j2;
 import org.eam.games.wanderer.actor.Actor;
 import org.eam.games.wanderer.actor.Player;
-import org.eam.games.wanderer.drawable.ActorDrawable;
+import org.eam.games.wanderer.drawable.PlayerDrawable;
 import org.eam.games.wanderer.drawable.Drawable;
 import org.eam.games.wanderer.drawable.WorldDrawable;
 import org.eam.games.wanderer.engine.Camera;
@@ -39,7 +39,7 @@ public class WandererApp {
         Drawable worldDrawable = new WorldDrawable(properties, world);
         Actor hero = new Player();
         Movement start = Movement.start();
-        Drawable drawHero = new ActorDrawable(hero, properties.getTileSize(), start);
+        Drawable drawHero = new PlayerDrawable(hero, properties.getTileSize(), start);
         Camera camera = new Camera(start, properties);
         Display display = new Display(camera, worldDrawable, drawHero);
 

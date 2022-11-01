@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.eam.games.wanderer.drawable.Drawable;
+import org.eam.games.wanderer.drawable.GraphicsContext;
 import org.eam.games.wanderer.engine.Camera;
 
 /**
@@ -34,22 +35,22 @@ public class Display extends JPanel {
         log.trace("World painted: elapsedMs={}", () -> started.elapsed(TimeUnit.MILLISECONDS));
     }
 
-    private void drawGame(Graphics g) {
-        g = camera.translate(g);
+    private void drawGame(Graphics graphics) {
+        GraphicsContext context = camera.moved(graphics);
 
-        world.draw(g);
-        hero.draw(g);
+        world.draw(context);
+        hero.draw(context);
 
 //        for (int i = 0; i < controller.getMonsterList().size(); i++) {
 //            drawCharacter.setCharacter(controller.getMonster(i));
-//            drawCharacter.draw(g);
+//            drawCharacter.draw(graphics);
 //        }
 //
 //        drawCharacter.setCharacter(controller.getHero());
-//        drawCharacter.draw(g);
+//        drawCharacter.draw(graphics);
 //
-//        g.translate(-offSetX, -offSetY);
-//        hud.draw(g);
+//        graphics.translate(-offSetX, -offSetY);
+//        hud.draw(graphics);
     }
 
 }

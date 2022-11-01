@@ -1,8 +1,10 @@
 package org.eam.games.wanderer.engine;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.eam.games.wanderer.actor.Direction;
 import org.eam.games.wanderer.world.Cell;
 import org.eam.games.wanderer.world.Tile;
@@ -12,6 +14,7 @@ import org.eam.games.wanderer.world.World;
  * Encapsulates the current cell of some actor/entity, and controls transition based on direction. Since this class
  * instances have no knowledge about what exactly is being tracked, the control is performed externally.
  */
+@Log4j2
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Movement {
 
@@ -55,6 +58,7 @@ public class Movement {
         world.tileForCell(newCell)
             .filter(canPass)
             .ifPresent(t -> current.move(newCell));
+        log.info("Moving: direction={}, cell={}, nextTile={}", () -> direction, () -> current, () -> tile);
     }
 
     /**
