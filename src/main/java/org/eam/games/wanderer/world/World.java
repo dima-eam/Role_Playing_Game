@@ -1,7 +1,7 @@
 package org.eam.games.wanderer.world;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import lombok.extern.log4j.Log4j2;
@@ -18,7 +18,11 @@ public final class World {
     private static final Tile WALL = new Tile("/images/wall.jpg", true);
     private static final Tile GRASS = new Tile("/images/grass.png", false);
 
-    private final Map<Cell, Tile> layout = new HashMap<>();
+    /**
+     * Each element (sub-list) emulates one row of tiles. Allows to access tiles by passing xTile and yTile coordinates,
+     * respectively
+     */
+    private final List<List<Tile>> layout = new ArrayList<>();
 
     private final int widthInTiles;
     private final int heightInTiles;
@@ -33,11 +37,11 @@ public final class World {
     /**
      * Returns an optional tile for building a path for a monster, or for other checks.
      */
-    public Optional<Tile> getTile(int xTile, int yTile) { // todo pass Cell and move checks inside it
-        if (xTile < 0 || xTile > widthInTiles - 1 || yTile < 0 || yTile > heightInTiles - 1) {
+    public Optional<Tile> getTile(int xTile, int yTile) {
+        if (xTile < 0 || xTile >= widthInTiles - 1 || yTile < 0 || yTile >= heightInTiles - 1) {
             return Optional.empty();
-        } else { // todo intern cells to not create them every call
-            return Optional.of(layout.get(new Cell(xTile, yTile)));
+        } else {
+            return Optional.of(layout.get(xTile).get(yTile));
         }
     }
 
@@ -48,19 +52,30 @@ public final class World {
         do {
             x = RANDOM.nextInt(widthInTiles);
             y = RANDOM.nextInt(heightInTiles);
-        } while (getTile(x, y).get().isSolid());
+        } while (getTile(x, y).orElse(WALL).isSolid());
 
         return new Cell(x, y);
     }
 
+    public Optional<Tile> tileForCell(Cell newCell) {
+        return getTile(newCell.getXTile(), newCell.getYTile());
+    }
+
+    /**
+     * Generation logic first fill the entire world with walls, and then "carves" the maze with grass tiles. Starting
+     * position (0, 0) id always a grass tile. Carving logic is recursive, starts from tile (0, 0), and then replaces
+     * adjacent tiles with grass until maze border is reached.
+     */
     private void generate() {
         for (int x = 0; x < widthInTiles; x++) {
+            List<Tile> row = new ArrayList<>();
             for (int y = 0; y < heightInTiles; y++) {
-                layout.put(new Cell(x, y), WALL);
+                row.add(WALL);
             }
+            layout.add(row);
         }
 
-        layout.put(new Cell(0, 0), GRASS);
+        layout.get(0).set(0, GRASS);
         carve(0, 0);
     }
 
@@ -77,8 +92,8 @@ public final class World {
             int x2 = x1 + moveX[dir];
             int y2 = y1 + moveY[dir];
             if (getTile(x2, y2).orElse(GRASS).isSolid()) {
-                layout.put(new Cell(x1, y1), GRASS);
-                layout.put(new Cell(x2, y2), GRASS);
+                layout.get(x1).set(y1, GRASS);
+                layout.get(x2).set(y2, GRASS);
                 carve(x2, y2);
             } else {
                 dir = (dir + 1) % 4;
@@ -87,10 +102,5 @@ public final class World {
         }
     }
 
-    public Optional<Cell> possbileMove(Cell newCell) {
-        return getTile(newCell.getXTile(), newCell.getYTile())
-            .filter(t -> !t.isSolid())
-            .map(t -> newCell);
-    }
 }
 

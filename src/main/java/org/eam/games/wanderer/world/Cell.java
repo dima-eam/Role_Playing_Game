@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @AllArgsConstructor
 @Data
-public class Cell {
+public class Cell { // todo remove getters
 
     private int xTile;
     private int yTile;

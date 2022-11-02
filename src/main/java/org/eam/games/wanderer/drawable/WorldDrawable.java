@@ -1,29 +1,37 @@
 package org.eam.games.wanderer.drawable;
 
-import java.awt.Graphics;
-import lombok.AllArgsConstructor;
 import org.eam.games.wanderer.properties.GameProperties;
 import org.eam.games.wanderer.world.World;
 
 /**
- * Connects game world instance to rendering context.
+ * Connects game world instance to rendering context. On every update redraws only the visible part of the game world,
+ * based on given {@link GraphicsContext}.
  */
-@AllArgsConstructor
 public class WorldDrawable implements Drawable {
 
     private final GameProperties properties;
     private final World world;
 
+    public WorldDrawable(GameProperties properties, World world) {
+        this.properties = properties;
+        this.world = world;
+    }
+
     @Override
-    public void draw(Graphics g) {
-        for (int i = 0; i < properties.getWidthInTiles(); i++) {
-            for (int j = 0; j < properties.getHeightInTiles(); j++) {
-                g.drawImage(world.getTile(i, j).get().getTileImage(),
-                    i * properties.getTileSize(),
-                    j * properties.getTileSize(),
-                    null);
+    public void draw(GraphicsContext context) {
+        for (int i = 0; i < properties.getBoundRight(); i++) {
+            for (int j = 0; j < properties.getBoundBottom(); j++) {
+                extracted(context, i, j);
             }
         }
+    }
+
+    private void extracted(GraphicsContext context, int x, int y) {
+        world.getTile(x + context.getXOffset(), y + context.getYOffset())
+            .ifPresent(t -> context.process(g -> g.drawImage(t.getTileImage(),
+                x * properties.getTileSize(),
+                y * properties.getTileSize(),
+                null)));
     }
 
 }
