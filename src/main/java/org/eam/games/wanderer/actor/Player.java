@@ -32,6 +32,14 @@ public class Player extends Actor {
         return imagesByDirection;
     }
 
+    @Override
+    public String stats() {
+        return "Hero(" + level + ")" +
+            "HP: " + healthPoint + "/" + maxHealthPoint +
+            " | SP: " + strikePoint +
+            " | DP: " + defendPoint;
+    }
+
     public void levelUp() {
         int chance = new Random().nextInt(10);
 //        if (chance == 0) {

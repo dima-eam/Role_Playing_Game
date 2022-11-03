@@ -55,3 +55,9 @@ Face Right ![Hero Face Right](src/main/resources/images/hero-right.gif)
 
 The game runs a loop, every cycle updates player position updated by keyboard events, and updates monsters positions in
 turn.
+
+## TODOs
+
+1. Add monsters to fight with, and HUD with info
+2. Add boss with next level condition
+3. Add levelup feature

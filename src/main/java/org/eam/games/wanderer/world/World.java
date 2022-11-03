@@ -35,10 +35,10 @@ public final class World {
     }
 
     /**
-     * Returns an optional tile for building a path for a monster, or for other checks.
+     * Returns an optional tile for world generation, building a path for a monster, or for other checks.
      */
     public Optional<Tile> getTile(int xTile, int yTile) {
-        if (xTile < 0 || xTile >= widthInTiles - 1 || yTile < 0 || yTile >= heightInTiles - 1) {
+        if (xTile < 0 || xTile >= widthInTiles || yTile < 0 || yTile >= heightInTiles) {
             return Optional.empty();
         } else {
             return Optional.of(layout.get(xTile).get(yTile));

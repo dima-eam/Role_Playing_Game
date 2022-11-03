@@ -14,13 +14,13 @@ import org.eam.games.wanderer.drawable.WithImage;
  * methods.
  */
 @AllArgsConstructor
-public abstract class Actor implements WithImage {
+public abstract class Actor implements WithImage, WithStats {
 
-    private int maxHealthPoint;
-    private int healthPoint;
-    private int defendPoint;
-    private int strikePoint;
-    private int level;
+    protected int maxHealthPoint;
+    protected int healthPoint;
+    protected int defendPoint;
+    protected int strikePoint;
+    protected int level;
 
     public Actor(int maxHealthPoint, int defendPoint, int strikePoint) {
         this.maxHealthPoint = maxHealthPoint;
@@ -38,7 +38,6 @@ public abstract class Actor implements WithImage {
     public boolean dead() {
         return healthPoint <= 0;
     }
-
 
     private int calculateStrikeValue() {
         return 2 * rollDice() + this.strikePoint;

@@ -21,7 +21,6 @@ public class GameEngine {
 
     private final Dimension screenSize;
     private final GameController controller;
-    private final Hud hud;
 //    private final DrawCharacter drawCharacter;
 
     public GameEngine(Dimension screenSize) {
@@ -32,12 +31,10 @@ public class GameEngine {
 //        setBackground(Color.WHITE);
 
         controller = new GameController();
-        hud = new Hud();
 //        drawMaze = new DrawMaze( controller.getMaze());
 //        drawCharacter = new DrawCharacter();
 //
 //        maze = controller.getMaze();
-        hud.setGameController(controller);
 
     }
 

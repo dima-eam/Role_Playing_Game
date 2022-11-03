@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Stores application params. todo config file mapping.
@@ -14,6 +15,7 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @Builder
+@ToString
 public class GameProperties {
 
     private static final int DEFAULT_WIDTH_IN_TILES = 30;
@@ -87,4 +89,5 @@ public class GameProperties {
 
         return boundary - 2 * threshold - 1;// todo fix extra row and col
     }
+
 }

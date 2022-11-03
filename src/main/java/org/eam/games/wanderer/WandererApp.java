@@ -6,16 +6,17 @@ import java.util.concurrent.TimeUnit;
 import lombok.extern.log4j.Log4j2;
 import org.eam.games.wanderer.actor.Actor;
 import org.eam.games.wanderer.actor.Player;
-import org.eam.games.wanderer.drawable.PlayerDrawable;
 import org.eam.games.wanderer.drawable.Drawable;
+import org.eam.games.wanderer.drawable.PlayerDrawable;
 import org.eam.games.wanderer.drawable.WorldDrawable;
 import org.eam.games.wanderer.engine.Camera;
 import org.eam.games.wanderer.engine.GameController;
-import org.eam.games.wanderer.engine.PlayerController;
 import org.eam.games.wanderer.engine.Movement;
+import org.eam.games.wanderer.engine.PlayerController;
 import org.eam.games.wanderer.properties.GameProperties;
 import org.eam.games.wanderer.ui.Display;
 import org.eam.games.wanderer.ui.Game;
+import org.eam.games.wanderer.ui.Hud;
 import org.eam.games.wanderer.world.World;
 
 /**
@@ -40,10 +41,13 @@ public class WandererApp {
         Actor hero = new Player();
         Movement start = Movement.start();
         Drawable drawHero = new PlayerDrawable(hero, properties.getTileSize(), start);
+        Drawable hud = new Hud(properties, hero, start);
         Camera camera = new Camera(start, properties);
-        Display display = new Display(camera, worldDrawable, drawHero);
+        Display display = new Display(camera, worldDrawable, drawHero, hud);
 
         Game.run(properties, display, new GameController(), new PlayerController(start, world));
+
+        log.info("Game initialized: properties={}", properties);
     }
 
 }
