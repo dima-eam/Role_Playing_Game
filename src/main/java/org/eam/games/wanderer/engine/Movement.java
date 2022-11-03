@@ -71,7 +71,7 @@ public class Movement implements WithStats {
         };
         Optional<Tile> tile = world.tileForCell(newCell);
         tile
-//            .filter(canPass)
+            .filter(canPass)
             .ifPresent(t -> current.move(newCell));
         log.trace("Moving: direction={}, cell={}, nextTile={}", () -> direction, () -> current, () -> tile);
     }
