@@ -1,25 +1,30 @@
 package org.eam.games.wanderer.actor;
 
-import javax.swing.ImageIcon;
-import org.eam.games.wanderer.world.Cell;
-import org.eam.games.wanderer.world.Tile;
+import java.awt.Image;
+import java.util.Map;
 
 public class BossMonster extends Monster {
 
-    private static final String BOSS_IMAGE = Tile.class.getResource("/images/boss.png").getFile();
+    private static final String BOSS_IMAGE = "/images/boss.png";
 
-    public BossMonster(int xc, int yc, int level) {
-        super(new Cell(xc,yc), level);
+    private final Map<Direction, Image> imagesByDirection = Map.of(
+        Direction.RIGHT, fromFilename(BOSS_IMAGE),
+        Direction.LEFT, fromFilename(BOSS_IMAGE),
+        Direction.UP, fromFilename(BOSS_IMAGE),
+        Direction.DOWN, fromFilename(BOSS_IMAGE)
+    );
+
+    public BossMonster(int level) {
+        super(level);
 //        maxHealthPoint = 2 * level * rollDice() + rollDice();
 //        defendPoint = (int) Math.ceil(level / 2.0 * rollDice() + rollDice() / 2.0);
 //        strikePoint = level * rollDice() + getLevel();
 //        healthPoint = maxHealthPoint;
-        initCharacter(xc, yc);
     }
 
-    void initCharacter(int xPos, int yPos) {
-        ImageIcon icon = new ImageIcon(BOSS_IMAGE);
-//        image = icon.getImage();
+    @Override
+    Map<Direction, Image> imagesByDirection() {
+        return imagesByDirection;
     }
 
 }

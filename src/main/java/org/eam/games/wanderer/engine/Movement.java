@@ -53,8 +53,7 @@ public class Movement implements WithStats {
 
     @Override
     public String stats() {
-        return "POS: " + current.getXTile() + ", " + current.getYTile() +
-            " | DIR: " + direction;
+        return "POS: " + current.getXTile() + ", " + current.getYTile() + " | DIR: " + direction;
     }
 
     /**

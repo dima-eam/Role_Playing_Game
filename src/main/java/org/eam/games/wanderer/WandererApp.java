@@ -7,10 +7,12 @@ import lombok.extern.log4j.Log4j2;
 import org.eam.games.wanderer.actor.Actor;
 import org.eam.games.wanderer.actor.Player;
 import org.eam.games.wanderer.drawable.Drawable;
+import org.eam.games.wanderer.drawable.MonstersDrawable;
 import org.eam.games.wanderer.drawable.PlayerDrawable;
 import org.eam.games.wanderer.drawable.WorldDrawable;
 import org.eam.games.wanderer.engine.Camera;
 import org.eam.games.wanderer.engine.GameController;
+import org.eam.games.wanderer.engine.Monsters;
 import org.eam.games.wanderer.engine.Movement;
 import org.eam.games.wanderer.engine.PlayerController;
 import org.eam.games.wanderer.properties.GameProperties;
@@ -43,9 +45,11 @@ public class WandererApp {
         Drawable drawHero = new PlayerDrawable(hero, properties.getTileSize(), start);
         Drawable hud = new Hud(properties, hero, start);
         Camera camera = new Camera(start, properties);
-        Display display = new Display(camera, worldDrawable, drawHero, hud);
+        Monsters monsters = new Monsters(world);
+        MonstersDrawable monstersDrawable = new MonstersDrawable(monsters);
+        Display display = new Display(camera, worldDrawable, drawHero, hud,  monstersDrawable);
 
-        Game.run(properties, display, new GameController(), new PlayerController(start, world));
+        Game.run(properties, display, new GameController(), new PlayerController(start, world, monsters));
 
         log.info("Game initialized: properties={}", properties);
     }

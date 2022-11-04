@@ -1,64 +1,38 @@
 package org.eam.games.wanderer.actor;
 
+import static org.eam.games.wanderer.engine.Dice.rollDice;
+
 import java.awt.Image;
 import java.util.Map;
-import java.util.Random;
-import javax.swing.ImageIcon;
-import org.eam.games.wanderer.world.Cell;
-import org.eam.games.wanderer.world.World;
-import org.eam.games.wanderer.world.Tile;
 
+/**
+ * Represents AI controlled enemy.
+ */
 public class Monster extends Actor {
 
-    private static final String MONSTER_IMAGE = Tile.class.getResource("/images/monster.gif").getFile();
-    private static final ImageIcon ICON = new ImageIcon(MONSTER_IMAGE);
-    private boolean moveLastRound;
+    private static final String MONSTER_IMAGE = "/images/monster.gif";
 
-    public Monster(Cell cell, int level) {
-        super(1,1,1);
-//        this.level = level;
-//        maxHealthPoint = 10 * level * rollDice();
-//        defendPoint = (int) Math.ceil(level * rollDice() / 2.0);
-//        strikePoint = level * rollDice();
-//        healthPoint = maxHealthPoint;
-        initCharacter(cell);
+    private final Map<Direction, Image> imagesByDirection = Map.of(
+        Direction.RIGHT, fromFilename(MONSTER_IMAGE),
+        Direction.LEFT, fromFilename(MONSTER_IMAGE),
+        Direction.UP, fromFilename(MONSTER_IMAGE),
+        Direction.DOWN, fromFilename(MONSTER_IMAGE)
+    );
+
+    public Monster(int level) {
+        super(10 * level * rollDice(), (int) Math.ceil(level * rollDice() / 2.0), level * rollDice());
+        this.level = level;
+        healthPoint = maxHealthPoint;
     }
 
-    public void move(World world) {
-        int newX;
-        int newY;
-
-//        do {
-//            newX = x + stepRandom();
-//            newY = y + stepRandom();
-//        } while (world.getTile(newX, newY).map(Tile::isSolid).orElse(true));
-//
-//        x = newX;
-//        y = newY;
-    }
-
-    public void takeTurn(World world) {
-        if (!moveLastRound) {
-            move(world);
-            moveLastRound = true;
-        } else {
-            moveLastRound = false;
-        }
-    }
-
-    private int stepRandom() {
-        int r = new Random().nextInt(3);
-        return r - 1;
-    }
-
-    void initCharacter(Cell cell) {
-        ImageIcon icon = new ImageIcon(MONSTER_IMAGE);
-//        image = icon.getImage();
-//       cell == cell;
+    @Override
+    public String stats() { // todo reveal stats based on hero's level or skill check
+        return "Monster(" + level + ")" + "HP: " + healthPoint + "/" + maxHealthPoint;
     }
 
     @Override
     Map<Direction, Image> imagesByDirection() {
-        return null;
+        return imagesByDirection;
     }
+
 }

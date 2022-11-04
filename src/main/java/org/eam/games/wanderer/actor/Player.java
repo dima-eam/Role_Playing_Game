@@ -4,7 +4,6 @@ import static org.eam.games.wanderer.engine.Dice.rollDice;
 
 import java.awt.Image;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * Game character, controlled by player.
@@ -23,7 +22,7 @@ public class Player extends Actor {
         Direction.DOWN, fromFilename(FACE_DOWN)
     );
 
-    public Player() {
+    public Player() { // todo externalize
         super(20 + 3 * rollDice(), 2 * rollDice(), 5 + rollDice());
     }
 
@@ -34,15 +33,15 @@ public class Player extends Actor {
 
     @Override
     public String stats() {
-        return "Hero(" + level + ")" +
-            "HP: " + healthPoint + "/" + maxHealthPoint +
-            " | SP: " + strikePoint +
-            " | DP: " + defendPoint;
+        return "Hero(" + level + ")" + // todo hero name input
+            " | HP: " + healthPoint + "/" + maxHealthPoint +
+            " | ATK: " + strikePoint +
+            " | DEF: " + defendPoint;
     }
 
     public void levelUp() {
-        int chance = new Random().nextInt(10);
-//        if (chance == 0) {
+        int chance = rollDice(10);
+//        if (chance == 1) {
 //            healthPoint = maxHealthPoint;
 //        } else if (chance <= 4) {
 //            setHealthPoint(healthPoint + healthPoint / 3);

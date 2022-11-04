@@ -22,6 +22,7 @@ public class Display extends JPanel {
     private final Drawable world;
     private final Drawable hero;
     private final Drawable hud;
+    private final Drawable monsters;
 
     /**
      * Initially paints the whole game, and repaints by timer.
@@ -42,6 +43,7 @@ public class Display extends JPanel {
         world.draw(context); // todo make a collection?
         hero.draw(context);
         hud.draw(context);
+        monsters.draw(context);
 
 //        for (int i = 0; i < controller.getMonsterList().size(); i++) {
 //            drawCharacter.setCharacter(controller.getMonster(i));
