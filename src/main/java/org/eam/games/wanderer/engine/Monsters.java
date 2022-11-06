@@ -3,6 +3,7 @@ package org.eam.games.wanderer.engine;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.eam.games.wanderer.actor.Actor;
 import org.eam.games.wanderer.actor.BossMonster;
@@ -16,20 +17,24 @@ public class Monsters {
     private static final int INITIAL_MONSTER_AMOUNT = 20;
 
     private final World world;
-    private final List<MonsterInCell> monsterList;
+    private final List<MonsterMovement> monsters;
     private final int monsterAmount;
 
     public Monsters(World world) {
         this.world = world;
 
         monsterAmount = INITIAL_MONSTER_AMOUNT;
-        monsterList = new ArrayList<>(monsterAmount);
+        monsters = new ArrayList<>(monsterAmount);
 
         populateMonsters();
     }
 
     public void react() {
-        for (MonsterInCell monster : monsterList) {
+        for (MonsterMovement monster : monsters) {
+            if (monster.monster.dead()) {
+                continue;
+            }
+
             Cell newCell;
             do {
                 newCell = monster.nextCell();
@@ -43,20 +48,30 @@ public class Monsters {
 
     private void populateMonsters() {
         for (int i = 0; i < monsterAmount - 2; i++) {
-            monsterList.add(new MonsterInCell(world.findEmptyTile(), new Monster(1)));
+            monsters.add(new MonsterMovement(world.findEmptyTile(), new Monster(1)));
         }
         Monster keyMonster = new Monster(1);
-        monsterList.add(new MonsterInCell(world.findEmptyTile(), keyMonster));
+        monsters.add(new MonsterMovement(world.findEmptyTile(), keyMonster));
         BossMonster boss = new BossMonster(2);
-        monsterList.add(new MonsterInCell(world.findEmptyTile(), boss));
+        monsters.add(new MonsterMovement(world.findEmptyTile(), boss));
     }
 
     public void forEach(BiConsumer<Cell, Actor> process) {
-        monsterList.forEach(m -> process.accept(m.cell, m.monster));
+        monsters.stream()
+            .filter(m -> !m.monster.dead())
+            .forEach(m -> process.accept(m.cell, m.monster));
+    }
+
+    public List<Monster> forCell(Cell heroCell) {
+        return monsters.stream()
+            .filter(m -> m.cell.equals(heroCell))
+            .map(m -> m.monster)
+            .filter(m -> !m.dead())
+            .collect(Collectors.toList());
     }
 
     @AllArgsConstructor
-    private static class MonsterInCell {
+    private static class MonsterMovement {
 
         private final Cell cell;
         private final Monster monster;

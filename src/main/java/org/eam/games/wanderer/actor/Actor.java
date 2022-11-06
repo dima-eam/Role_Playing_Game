@@ -5,6 +5,7 @@ import static org.eam.games.wanderer.engine.Dice.rollDice;
 import java.awt.Image;
 import java.util.Map;
 import lombok.AllArgsConstructor;
+import lombok.ToString;
 import org.eam.games.wanderer.drawable.WithImage;
 
 /**
@@ -13,6 +14,7 @@ import org.eam.games.wanderer.drawable.WithImage;
  * expensive. To keep control, though, no public accessors are used, and mutation happens only via small set of
  * methods.
  */
+@ToString
 @AllArgsConstructor
 public abstract class Actor implements WithImage, WithStats {
 
@@ -24,6 +26,7 @@ public abstract class Actor implements WithImage, WithStats {
 
     public Actor(int maxHealthPoint, int defendPoint, int strikePoint) {
         this.maxHealthPoint = maxHealthPoint;
+        this.healthPoint = maxHealthPoint;
         this.defendPoint = defendPoint;
         this.strikePoint = strikePoint;
     }

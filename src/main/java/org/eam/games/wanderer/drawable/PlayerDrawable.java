@@ -2,7 +2,7 @@ package org.eam.games.wanderer.drawable;
 
 import lombok.AllArgsConstructor;
 import org.eam.games.wanderer.actor.Actor;
-import org.eam.games.wanderer.engine.Movement;
+import org.eam.games.wanderer.engine.PlayerMovement;
 
 /**
  * Controls player drawing logic. Player's character has its current position and fixed step, controlling how many tiles
@@ -14,7 +14,7 @@ public class PlayerDrawable implements Drawable {
 
     private final Actor actor;
     private final int step;
-    private final Movement movement;
+    private final PlayerMovement movement;
 
     /**
      * @inheritDoc

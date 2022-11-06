@@ -12,7 +12,7 @@ import org.eam.games.wanderer.world.World;
 @AllArgsConstructor
 public class PlayerController extends KeyAdapter {
 
-    private final Movement playerMovement;
+    private final PlayerMovement playerMovement;
     private final World world;
     private final Monsters monsters;
 

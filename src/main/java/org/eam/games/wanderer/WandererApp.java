@@ -11,10 +11,11 @@ import org.eam.games.wanderer.drawable.MonstersDrawable;
 import org.eam.games.wanderer.drawable.PlayerDrawable;
 import org.eam.games.wanderer.drawable.WorldDrawable;
 import org.eam.games.wanderer.engine.Camera;
+import org.eam.games.wanderer.engine.CombatController;
 import org.eam.games.wanderer.engine.GameController;
 import org.eam.games.wanderer.engine.Monsters;
-import org.eam.games.wanderer.engine.Movement;
 import org.eam.games.wanderer.engine.PlayerController;
+import org.eam.games.wanderer.engine.PlayerMovement;
 import org.eam.games.wanderer.properties.GameProperties;
 import org.eam.games.wanderer.ui.Display;
 import org.eam.games.wanderer.ui.Game;
@@ -41,15 +42,16 @@ public class WandererApp {
         World world = new World(properties.getWidthInTiles(), properties.getHeightInTiles());
         Drawable worldDrawable = new WorldDrawable(properties, world);
         Actor hero = new Player();
-        Movement start = Movement.start();
+        PlayerMovement start = PlayerMovement.start();
         Drawable drawHero = new PlayerDrawable(hero, properties.getTileSize(), start);
         Drawable hud = new Hud(properties, hero, start);
         Camera camera = new Camera(start, properties);
         Monsters monsters = new Monsters(world);
         MonstersDrawable monstersDrawable = new MonstersDrawable(monsters);
-        Display display = new Display(camera, worldDrawable, drawHero, hud,  monstersDrawable);
+        Display display = new Display(camera, worldDrawable, drawHero, hud, monstersDrawable);
 
-        Game.run(properties, display, new GameController(), new PlayerController(start, world, monsters));
+        Game.run(properties, display, new GameController(), new PlayerController(start, world, monsters),
+            new CombatController(start.getCurrent(), hero, monsters));
 
         log.info("Game initialized: properties={}", properties);
     }
