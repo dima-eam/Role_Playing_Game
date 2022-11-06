@@ -27,7 +27,7 @@ public class Monster extends Actor {
 
     @Override
     public String stats() { // todo reveal stats based on hero's level or skill check
-        return "Monster(" + level + ")" + "HP: " + healthPoint + "/" + maxHealthPoint;
+        return "Monster(" + level + ")" + " | HP: " + healthPoint + "/" + maxHealthPoint;
     }
 
     @Override

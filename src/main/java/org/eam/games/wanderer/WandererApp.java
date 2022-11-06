@@ -44,9 +44,9 @@ public class WandererApp {
         Actor hero = new Player();
         PlayerMovement start = PlayerMovement.start();
         Drawable drawHero = new PlayerDrawable(hero, properties.getTileSize(), start);
-        Drawable hud = new Hud(properties, hero, start);
         Camera camera = new Camera(start, properties);
         Monsters monsters = new Monsters(world);
+        Drawable hud = new Hud(properties, hero, start, monsters);
         MonstersDrawable monstersDrawable = new MonstersDrawable(monsters);
         Display display = new Display(camera, worldDrawable, drawHero, hud, monstersDrawable);
 

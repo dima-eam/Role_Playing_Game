@@ -19,7 +19,7 @@ import org.eam.games.wanderer.properties.GameProperties;
 public class Hud implements Drawable {
 
     private static final int STAT_WIDTH = 330;
-    private static final int STAT_HEIGHT = 40;
+    private static final int STAT_HEIGHT = 55;
     private static final int STAT_SIZE = 15;
     private static final int STAT_POSX = 1800 - STAT_WIDTH;
     private static final int STAT_HERO_POSY = 15;
@@ -39,6 +39,7 @@ public class Hud implements Drawable {
     private final GameProperties properties;
     private final WithStats playerStats;
     private final WithStats positionStats;
+    private final WithStats monsterStats;
 
     @Override
     public void draw(GraphicsContext context) {
@@ -49,6 +50,7 @@ public class Hud implements Drawable {
             g.setColor(Color.black);
             g.drawString(playerStats.stats(), STAT_POSX, STAT_HERO_POSY);
             g.drawString(positionStats.stats(), STAT_POSX, STAT_HERO_POSY + 17);
+            g.drawString(monsterStats.stats(), STAT_POSX, STAT_HERO_POSY + 32);
 
             String statusTextMonster = "";
 

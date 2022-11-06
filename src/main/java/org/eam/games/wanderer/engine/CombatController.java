@@ -29,7 +29,12 @@ public class CombatController extends KeyAdapter {
     private static void combatRound(Actor hero, Monster monster) {
         log.info("Combat round: hero={}, monster={}", hero, monster);
         hero.attack(monster);
+        monster.attack(hero);
 
+        if (hero.dead()) { // todo notify hud/game controller
+            log.info("Game over");
+            System.exit(0);
+        }
         if (monster.dead()) {
             log.info("Monster killed, getting stronger");
             hero.getStronger();

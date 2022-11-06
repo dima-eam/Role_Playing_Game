@@ -48,8 +48,10 @@ public abstract class Actor implements WithImage, WithStats {
 
     public void getStronger() {
         maxHealthPoint += rollDice();
+        healthPoint = Math.min(healthPoint + maxHealthPoint / 2, maxHealthPoint);
         defendPoint += rollDice();
         strikePoint += rollDice();
+        level++;
     }
 
     public Image imageForDirection(Direction direction) {
