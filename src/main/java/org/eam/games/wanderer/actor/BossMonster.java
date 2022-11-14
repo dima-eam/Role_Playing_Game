@@ -14,8 +14,8 @@ public class BossMonster extends Monster {
         Direction.DOWN, fromFilename(BOSS_IMAGE)
     );
 
-    public BossMonster(int level) {
-        super(level);
+    public BossMonster() {
+        super();
 //        maxHealthPoint = 2 * level * rollDice() + rollDice();
 //        defendPoint = (int) Math.ceil(level / 2.0 * rollDice() + rollDice() / 2.0);
 //        strikePoint = level * rollDice() + getLevel();

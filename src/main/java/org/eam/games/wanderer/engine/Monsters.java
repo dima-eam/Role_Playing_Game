@@ -6,7 +6,6 @@ import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.eam.games.wanderer.actor.Actor;
-import org.eam.games.wanderer.actor.BossMonster;
 import org.eam.games.wanderer.actor.Monster;
 import org.eam.games.wanderer.actor.WithStats;
 import org.eam.games.wanderer.world.Cell;
@@ -76,12 +75,21 @@ public class Monsters implements WithStats {
 
     private void populateMonsters() {
         for (int i = 0; i < monsterAmount - 2; i++) {
-            monsters.add(new MonsterMovement(world.findEmptyTile(), new Monster(1)));
+            monsters.add(new MonsterMovement(world.findEmptyTile(), new Monster()));
         }
-        Monster keyMonster = new Monster(1);
-        monsters.add(new MonsterMovement(world.findEmptyTile(), keyMonster));
-        BossMonster boss = new BossMonster(2);
-        monsters.add(new MonsterMovement(world.findEmptyTile(), boss));
+//        Monster keyMonster = new Monster(1);
+//        monsters.add(new MonsterMovement(world.findEmptyTile(), keyMonster));
+//        BossMonster boss = new BossMonster(2);
+//        monsters.add(new MonsterMovement(world.findEmptyTile(), boss));
+    }
+
+    public void getStronger() {
+        for (MonsterMovement monster : monsters) {
+            if (monster.monster.dead()) {
+                continue;
+            }
+            monster.monster.getStronger();
+        }
     }
 
     @AllArgsConstructor

@@ -5,6 +5,7 @@ import java.awt.Graphics;
 /**
  * Main interface for any drawable entity in the game. Utilizes AWT {@link Graphics} context.
  */
+@FunctionalInterface
 public interface Drawable {
 
     /**

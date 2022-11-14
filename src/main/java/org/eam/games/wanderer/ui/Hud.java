@@ -2,14 +2,11 @@ package org.eam.games.wanderer.ui;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
+import java.util.concurrent.atomic.AtomicBoolean;
 import lombok.AllArgsConstructor;
-import org.eam.games.wanderer.actor.Monster;
-import org.eam.games.wanderer.actor.Player;
 import org.eam.games.wanderer.actor.WithStats;
 import org.eam.games.wanderer.drawable.Drawable;
 import org.eam.games.wanderer.drawable.GraphicsContext;
-import org.eam.games.wanderer.engine.GameController;
 import org.eam.games.wanderer.properties.GameProperties;
 
 /**
@@ -40,6 +37,7 @@ public class Hud implements Drawable {
     private final WithStats playerStats;
     private final WithStats positionStats;
     private final WithStats monsterStats;
+    private final AtomicBoolean gameOver = new AtomicBoolean();
 
     @Override
     public void draw(GraphicsContext context) {
@@ -53,8 +51,6 @@ public class Hud implements Drawable {
             g.drawString(monsterStats.stats(), STAT_POSX, STAT_HERO_POSY + 32);
 
             String statusTextMonster = "";
-
-
 
 //            statusTextHero ="";
 //                "Hero(" + player.getLevel() + ")" +
@@ -72,8 +68,6 @@ public class Hud implements Drawable {
 //                }
 //                }
 
-
-
             if (statusTextMonster.length() > 0) {
                 g.setColor(Color.white);
                 g.fillRect(STAT_BOX_POSX, STAT_BOX_POSY + STAT_BOX_HEIGHT,
@@ -83,16 +77,21 @@ public class Hud implements Drawable {
             g.setColor(Color.black);
             g.drawString(statusTextMonster, STAT_POSX, STAT_MONSTER_POSY);
         });
+
+        if (gameOver.get()) {
+            context.process(g -> {
+                g.setColor(Color.white);
+                g.fillRect(GAMEOVER_BOX_POSX, GAMEOVER_BOX_POSY, GAMEOVER_BOX_WIDTH, GAMEOVER_BOX_HEIGHT);
+
+                g.setColor(Color.RED);
+                g.setFont(new Font("Courier", Font.PLAIN, GAMEOVER_SIZE));
+                g.drawString("You are Dead!!!", GAMEOVER_POSX, GAMEOVER_POSY);
+            });
+        }
     }
 
-    private void gameOver(Graphics g) {
-        g.setColor(Color.white);
-        g.fillRect(GAMEOVER_BOX_POSX, GAMEOVER_BOX_POSY, GAMEOVER_BOX_WIDTH, GAMEOVER_BOX_HEIGHT);
-
-        g.setColor(Color.RED);
-        g.setFont(new Font("Courier", Font.PLAIN, GAMEOVER_SIZE));
-        g.drawString("You are Dead!!!", GAMEOVER_POSX, GAMEOVER_POSY);
-
+    public void gameOver() {
+        gameOver.set(true);
     }
 
 }

@@ -46,12 +46,12 @@ public class WandererApp {
         Drawable drawHero = new PlayerDrawable(hero, properties.getTileSize(), start);
         Camera camera = new Camera(start, properties);
         Monsters monsters = new Monsters(world);
-        Drawable hud = new Hud(properties, hero, start, monsters);
+        Hud hud = new Hud(properties, hero, start, monsters);
         MonstersDrawable monstersDrawable = new MonstersDrawable(monsters);
         Display display = new Display(camera, worldDrawable, drawHero, hud, monstersDrawable);
 
         Game.run(properties, display, new GameController(), new PlayerController(start, world, monsters),
-            new CombatController(start.getCurrent(), hero, monsters));
+            new CombatController(start.getCurrent(), hero, monsters, hud));
 
         log.info("Game initialized: properties={}", properties);
     }

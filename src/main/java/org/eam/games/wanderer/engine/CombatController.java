@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.eam.games.wanderer.actor.Actor;
 import org.eam.games.wanderer.actor.Monster;
+import org.eam.games.wanderer.ui.Hud;
 import org.eam.games.wanderer.world.Cell;
 
 @Log4j2
@@ -15,6 +16,7 @@ public class CombatController extends KeyAdapter {
     private final Cell heroCell;
     private final Actor hero;
     private final Monsters monsters;
+    private final Hud hud;
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -26,18 +28,20 @@ public class CombatController extends KeyAdapter {
         }
     }
 
-    private static void combatRound(Actor hero, Monster monster) {
+    private void combatRound(Actor hero, Monster monster) {
         log.info("Combat round: hero={}, monster={}", hero, monster);
         hero.attack(monster);
         monster.attack(hero);
 
-        if (hero.dead()) { // todo notify hud/game controller
+        if (hero.dead()) {
             log.info("Game over");
-            System.exit(0);
+            hud.gameOver();
         }
+
         if (monster.dead()) {
             log.info("Monster killed, getting stronger");
             hero.getStronger();
+            monsters.getStronger();
         }
     }
 

@@ -19,9 +19,8 @@ public class Monster extends Actor {
         Direction.DOWN, fromFilename(MONSTER_IMAGE)
     );
 
-    public Monster(int level) {
-        super(10 * level * rollDice(), (int) Math.ceil(level * rollDice() / 2.0), level * rollDice());
-        this.level = level;
+    public Monster() {
+        super(10 * rollDice(), (int) Math.ceil(rollDice() / 2.0), rollDice());
         healthPoint = maxHealthPoint;
     }
 
