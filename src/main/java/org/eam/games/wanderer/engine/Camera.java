@@ -14,7 +14,7 @@ import org.eam.games.wanderer.properties.GameProperties;
 @AllArgsConstructor
 public class Camera {
 
-    private final Movement centerOn;
+    private final PlayerMovement centerOn;
     private final GameProperties properties;
 
     /**

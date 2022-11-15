@@ -4,20 +4,23 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.eam.games.wanderer.actor.Direction;
+import org.eam.games.wanderer.actor.WithStats;
 import org.eam.games.wanderer.world.Cell;
 import org.eam.games.wanderer.world.Tile;
 import org.eam.games.wanderer.world.World;
 
 /**
- * Encapsulates the current cell of some actor/entity, and controls transition based on direction. Since this class
- * instances have no knowledge about what exactly is being tracked, the control is performed externally.
+ * Encapsulates the current cell of player entity, and controls transition based on direction. Main purpose is movement
+ * condition checks and direction for displaying player's entity.
  */
 @Log4j2
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class Movement {
+public class PlayerMovement implements WithStats {
 
+    @Getter
     private final Cell current;
     private final Predicate<Tile> canPass = tile -> !tile.isSolid();
     private Direction direction;
@@ -25,8 +28,8 @@ public class Movement {
     /**
      * Initial position in upper-left corner, face down.
      */
-    public static Movement start() {
-        return new Movement(new Cell(0, 0), Direction.DOWN);
+    public static PlayerMovement start() {
+        return new PlayerMovement(new Cell(0, 0), Direction.DOWN);
     }
 
     /**
@@ -44,9 +47,22 @@ public class Movement {
     }
 
     /**
+     * Current direction of an entity
+     */
+    public Direction direction() {
+        return direction;
+    }
+
+    @Override
+    public String stats() {
+        return "POS: " + current.getXTile() + ", " + current.getYTile() + " | DIR: " + direction;
+    }
+
+    /**
      * Changes the direction (always), and location if possible for that direction.
      */
-    public void move(Direction direction, World world) {
+    void move(Direction direction,
+        World world) { // todo think about injecting world, making tileForCell interface method
         this.direction = direction;
 
         Cell newCell = switch (direction) {
@@ -55,17 +71,11 @@ public class Movement {
             case LEFT -> current.moveLeft();
             case RIGHT -> current.moveRight();
         };
-        world.tileForCell(newCell)
-            .filter(canPass)
+        Optional<Tile> tile = world.tileForCell(newCell);
+        tile
+//            .filter(canPass)
             .ifPresent(t -> current.move(newCell));
-        log.info("Moving: direction={}, cell={}, nextTile={}", () -> direction, () -> current, () -> tile);
-    }
-
-    /**
-     * Current direction of an entity
-     */
-    public Direction direction() {
-        return direction;
+        log.trace("Moving: direction={}, cell={}, nextTile={}", () -> direction, () -> current, () -> tile);
     }
 
 }

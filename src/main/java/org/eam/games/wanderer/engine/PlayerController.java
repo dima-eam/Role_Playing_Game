@@ -12,21 +12,27 @@ import org.eam.games.wanderer.world.World;
 @AllArgsConstructor
 public class PlayerController extends KeyAdapter {
 
-    private final Movement playerMovement;
+    private final PlayerMovement playerMovement;
     private final World world;
+    private final Monsters monsters;
 
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
         switch (key) {
-            case KeyEvent.VK_LEFT, KeyEvent.VK_A -> playerMovement.move(Direction.LEFT, world);
-            case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> playerMovement.move(Direction.RIGHT, world);
-            case KeyEvent.VK_UP, KeyEvent.VK_W -> playerMovement.move(Direction.UP, world);
-            case KeyEvent.VK_DOWN, KeyEvent.VK_S -> playerMovement.move(Direction.DOWN, world);
+            case KeyEvent.VK_LEFT, KeyEvent.VK_A -> processMove(Direction.LEFT);
+            case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> processMove(Direction.RIGHT);
+            case KeyEvent.VK_UP, KeyEvent.VK_W -> processMove(Direction.UP);
+            case KeyEvent.VK_DOWN, KeyEvent.VK_S -> processMove(Direction.DOWN);
             default -> {
             }
         }
+    }
+
+    private void processMove(Direction direction) {
+        playerMovement.move(direction, world);
+        monsters.react();
     }
 
 }
