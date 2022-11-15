@@ -58,6 +58,7 @@ turn.
 
 ## TODOs
 
-1. Add monsters to fight with, and HUD with info
-2. Add boss with next level condition
-3. Add levelup feature
+1. ~~Add monsters to fight with, and HUD with info~~
+2. Refactor HUD to be reactive panels
+3. Add boss with next level condition
+4. Add levelup feature
