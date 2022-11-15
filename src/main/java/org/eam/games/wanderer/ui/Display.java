@@ -44,17 +44,6 @@ public class Display extends JPanel {
         hero.draw(context);
         hud.draw(context);
         monsters.draw(context);
-
-//        for (int i = 0; i < controller.getMonsterList().size(); i++) {
-//            drawCharacter.setCharacter(controller.getMonster(i));
-//            drawCharacter.draw(graphics);
-//        }
-//
-//        drawCharacter.setCharacter(controller.getHero());
-//        drawCharacter.draw(graphics);
-//
-//        graphics.translate(-offSetX, -offSetY);
-//        hud.draw(graphics);
     }
 
 }

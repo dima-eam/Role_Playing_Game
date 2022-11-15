@@ -49,33 +49,6 @@ public class Hud implements Drawable {
             g.drawString(playerStats.stats(), STAT_POSX, STAT_HERO_POSY);
             g.drawString(positionStats.stats(), STAT_POSX, STAT_HERO_POSY + 17);
             g.drawString(monsterStats.stats(), STAT_POSX, STAT_HERO_POSY + 32);
-
-            String statusTextMonster = "";
-
-//            statusTextHero ="";
-//                "Hero(" + player.getLevel() + ")" +
-//                    "HP:" + player.healthPoint + "/" + player.maxHealthPoint +
-//                    "|SP:" + player.strikePoint +
-//                    "|DP:" + player.defendPoint +
-//                    "|POS:" + player.x + ", " + player.y;
-
-//                for (Monster monster : gameController.getMonsterList()) {
-//                if (player.x == monster.x && player.y == monster.y) {
-//                    statusTextMonster = "Monster(Level_" + monster.getLevel() + ")HP:"
-//                        + monster.healthPoint + "/" + monster.maxHealthPoint
-//                        + "|SP:" + monster.strikePoint
-//                        + "|DP:" + monster.defendPoint;
-//                }
-//                }
-
-            if (statusTextMonster.length() > 0) {
-                g.setColor(Color.white);
-                g.fillRect(STAT_BOX_POSX, STAT_BOX_POSY + STAT_BOX_HEIGHT,
-                    STAT_BOX_WIDTH, STAT_BOX_HEIGHT);
-            }
-
-            g.setColor(Color.black);
-            g.drawString(statusTextMonster, STAT_POSX, STAT_MONSTER_POSY);
         });
 
         if (gameOver.get()) {
