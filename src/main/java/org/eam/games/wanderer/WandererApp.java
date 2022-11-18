@@ -49,6 +49,7 @@ public class WandererApp {
         Hud hud = new Hud(properties, hero, start, monsters);
         MonstersDrawable monstersDrawable = new MonstersDrawable(monsters);
         Display display = new Display(camera, worldDrawable, drawHero, hud, monstersDrawable);
+        display.setDoubleBuffered(true); // todo move inside
 
         Game.run(properties, display, new GameController(), new PlayerController(start, world, monsters),
             new CombatController(start.getCurrent(), hero, monsters, hud));

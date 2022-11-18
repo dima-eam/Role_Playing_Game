@@ -3,12 +3,13 @@ package org.eam.games.wanderer.engine;
 import com.google.common.base.Stopwatch;
 import java.awt.Component;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
-import javax.swing.Timer;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.eam.games.wanderer.properties.GameProperties;
 import org.eam.games.wanderer.ui.Display;
 
 /**
@@ -16,29 +17,34 @@ import org.eam.games.wanderer.ui.Display;
  * {@link Display#paintComponent(Graphics)} method.
  */
 @Log4j2
-public class GameTimer implements ActionListener {
+@RequiredArgsConstructor
+public class GameTimer extends TimerTask {
 
     private final Component display;
-    private final Timer timer;
-
-    private GameTimer(GameProperties properties, Component display) {
-        this.display = display;
-
-        timer = new Timer(properties.getInterval(), this);
-    }
+    private final AtomicInteger framesCounter = new AtomicInteger();
+    private final AtomicLong durationStart = new AtomicLong(System.currentTimeMillis());
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        Stopwatch started = Stopwatch.createStarted();
+    public void run() {
+        Stopwatch started = Stopwatch.createStarted(); // todo create by property
 
         display.repaint();
 
-        log.trace("Redrawn on timer: elapsedMs={}", started.elapsed(TimeUnit.MILLISECONDS));
+        log.trace("Redrawn on timer: elapsedMcs={}", () -> started.elapsed(TimeUnit.MICROSECONDS));
+        framesCounter.incrementAndGet();
+        long current = System.currentTimeMillis();
+        if (current - durationStart.get() > 1000L) {
+            log.info("Control period passed: durationMs={}, FPS={}",
+                () -> current - durationStart.get(), framesCounter::get);
+            durationStart.set(current);
+            framesCounter.set(0);
+        }
     }
 
-    public static void start(GameProperties properties, Display display) {
-        GameTimer gameTimer = new GameTimer(properties, display);
-        gameTimer.timer.start();
+    public static void start(Display display) {
+        GameTimer gameTimer = new GameTimer(display);
+        Timer timer = new Timer("gameLoop");
+        timer.scheduleAtFixedRate(gameTimer, 0, 1000L / 60);
     }
 
 }
