@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class Monster extends Actor {
 
-    private static final String MONSTER_IMAGE = "/images/monster.gif";
+    private static final String MONSTER_IMAGE = "/tiles/monster.gif";
 
     private final Map<Direction, Image> imagesByDirection = Map.of(
         Direction.RIGHT, fromFilename(MONSTER_IMAGE),

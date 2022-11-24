@@ -28,10 +28,10 @@ public class WorldDrawable implements Drawable {
 
     private void extracted(GraphicsContext context, int x, int y) {
         world.getTile(x + context.getXOffset(), y + context.getYOffset())
-            .ifPresent(t -> context.process(g -> g.drawImage(t.getTileImage(),
+            .ifPresent(t -> context.process(t.getTileImage(),
                 x * properties.getTileSize(),
                 y * properties.getTileSize(),
-                null)));
+                properties.getTileSize()));
     }
 
 }

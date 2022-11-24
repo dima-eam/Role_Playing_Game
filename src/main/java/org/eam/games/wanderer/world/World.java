@@ -15,8 +15,8 @@ import lombok.extern.log4j.Log4j2;
 public final class World {
 
     private static final Random RANDOM = new Random();
-    private static final Tile WALL = new Tile("/images/wall.jpg", true);
-    private static final Tile GRASS = new Tile("/images/grass.png", false);
+    private static final Tile WALL = new Tile("/tiles/wall.jpg", true);
+    private static final Tile GRASS = new Tile("/tiles/grass.png", false);
 
     /**
      * Each element (sub-list) emulates one row of tiles. Allows to access tiles by passing xTile and yTile coordinates,

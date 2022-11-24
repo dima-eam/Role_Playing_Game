@@ -10,10 +10,10 @@ import java.util.Map;
  */
 public class Player extends Actor {
 
-    private static final String FACE_DOWN = "/images/hero-down.gif";
-    private static final String FACE_RIGHT = "/images/hero-right.gif";
-    private static final String FACE_LEFT = "/images/hero-left.gif";
-    private static final String FACE_UP = "/images/hero-up.gif";
+    private static final String FACE_DOWN = "/tiles/hero-down.gif";
+    private static final String FACE_RIGHT = "/tiles/hero-right.gif";
+    private static final String FACE_LEFT = "/tiles/hero-left.gif";
+    private static final String FACE_UP = "/tiles/hero-up.gif";
 
     private final Map<Direction, Image> imagesByDirection = Map.of(
         Direction.RIGHT, fromFilename(FACE_RIGHT),
