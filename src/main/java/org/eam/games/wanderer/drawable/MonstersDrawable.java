@@ -4,11 +4,13 @@ import java.awt.Graphics;
 import lombok.AllArgsConstructor;
 import org.eam.games.wanderer.actor.Direction;
 import org.eam.games.wanderer.engine.Monsters;
+import org.eam.games.wanderer.properties.GameProperties;
 
 @AllArgsConstructor
 public class MonstersDrawable implements Drawable {
 
     private final Monsters monsters;
+    private final GameProperties properties;
 
     @Override
     public void draw(GraphicsContext context) {
@@ -17,7 +19,8 @@ public class MonstersDrawable implements Drawable {
 
     private void drawMonsters(Graphics graphics, int xOffset, int yOffset) {
         monsters.forEach((cell, actor) -> graphics.drawImage(actor.imageForDirection(Direction.UP),
-            (cell.getXTile() - xOffset) * 72, (cell.getYTile() - yOffset) * 72,
+            (cell.getXTile() - xOffset) * properties.getTileSize(),
+            (cell.getYTile() - yOffset) * properties.getTileSize(),
             null));
     }
 

@@ -21,10 +21,6 @@ public class GameProperties {
     private static final int DEFAULT_WIDTH_IN_TILES = 30;
     private static final int DEFAULT_HEIGHT_IN_TILES = 29;
     private static final int DEFAULT_TILE_SIZE = 72;
-    /**
-     * Screen repaint interval, consumed by the timer. Timer will fire its events calling actionPerformed() method.
-     */
-    private static final int INTERVAL = 50;
 
     @Nonnull
     private final Dimension screenSize;
@@ -45,7 +41,6 @@ public class GameProperties {
      */
     private final int boundBottom;
     private final int tileSize;
-    private final int interval;
 
     /**
      * Creates properties instance with default tiles count and tiles size.
@@ -63,7 +58,6 @@ public class GameProperties {
             .boundRight(boundRight)
             .boundBottom(boundBottom)
             .tileSize(DEFAULT_TILE_SIZE)
-            .interval(INTERVAL)
             .build();
     }
 

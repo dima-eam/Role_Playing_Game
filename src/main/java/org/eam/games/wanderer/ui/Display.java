@@ -42,8 +42,9 @@ public class Display extends JPanel {
 
         world.draw(context); // todo make a collection?
         hero.draw(context);
-        hud.draw(context);
         monsters.draw(context);
+        // HUD must be last, to draw it on top
+        hud.draw(context);
     }
 
 }

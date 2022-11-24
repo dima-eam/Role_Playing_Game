@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class BossMonster extends Monster {
 
-    private static final String BOSS_IMAGE = "/images/boss.png";
+    private static final String BOSS_IMAGE = "/tiles/boss.png";
 
     private final Map<Direction, Image> imagesByDirection = Map.of(
         Direction.RIGHT, fromFilename(BOSS_IMAGE),

@@ -1,6 +1,7 @@
 package org.eam.games.wanderer;
 
 import com.google.common.base.Stopwatch;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.log4j.Log4j2;
@@ -47,8 +48,10 @@ public class WandererApp {
         Camera camera = new Camera(start, properties);
         Monsters monsters = new Monsters(world);
         Hud hud = new Hud(properties, hero, start, monsters);
-        MonstersDrawable monstersDrawable = new MonstersDrawable(monsters);
+        MonstersDrawable monstersDrawable = new MonstersDrawable(monsters, properties);
         Display display = new Display(camera, worldDrawable, drawHero, hud, monstersDrawable);
+        display.setDoubleBuffered(true); // todo move inside
+        display.setBackground(Color.BLACK);
 
         Game.run(properties, display, new GameController(), new PlayerController(start, world, monsters),
             new CombatController(start.getCurrent(), hero, monsters, hud));

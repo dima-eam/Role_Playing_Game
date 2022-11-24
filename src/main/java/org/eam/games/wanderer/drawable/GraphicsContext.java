@@ -1,6 +1,7 @@
 package org.eam.games.wanderer.drawable;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.util.function.Consumer;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -22,6 +23,13 @@ public class GraphicsContext {
 
     public static GraphicsContext from(Graphics graphics, int xOffset, int yOffset) {
         return new GraphicsContext(graphics, xOffset, yOffset);
+    }
+
+    /**
+     * Process the graphics context, enclosed in caller's execution context.
+     */
+    public void process(Image image, int x, int y, int size) {
+        graphics.drawImage(image, x, y, size, size, null);
     }
 
     /**

@@ -30,26 +30,26 @@ When monster and player occupy the same cell, you can perform an attack by press
 
 ### Hero
 
-Face up ![Hero Face Up](src/main/resources/images/hero-up.gif)
-Face Down ![Hero Face Down](src/main/resources/images/hero-down.gif)
-Face Left ![Hero Face Left](src/main/resources/images/hero-left.gif)
-Face Right ![Hero Face Right](src/main/resources/images/hero-right.gif)
+Face up ![Hero Face Up](src/main/resources/tiles/hero-up.gif)
+Face Down ![Hero Face Down](src/main/resources/tiles/hero-down.gif)
+Face Left ![Hero Face Left](src/main/resources/tiles/hero-left.gif)
+Face Right ![Hero Face Right](src/main/resources/tiles/hero-right.gif)
 
 ### Boss Monster
 
-![Boss Monster](src/main/resources/images/boss.png)
+![Boss Monster](src/main/resources/tiles/boss.png)
 
 ### Monster
 
-![Monster](src/main/resources/images/monster.gif)
+![Monster](src/main/resources/tiles/monster.gif)
 
 ### Wall
 
-![Wall](src/main/resources/images/wall.jpg)
+![Wall](src/main/resources/tiles/wall.jpg)
 
 ### Game Screenshot
 
-![Game Screenshot](src/main/resources/images/Game_Screenshot.png)
+![Game Screenshot](src/main/resources/tiles/Game_Screenshot.png)
 
 ## Engine implementation
 

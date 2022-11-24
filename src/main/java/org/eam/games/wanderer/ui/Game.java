@@ -21,7 +21,7 @@ public class Game extends JFrame {
         game.setUndecorated(true);
         game.setVisible(true);
 
-        GameTimer.start(properties, display);
+        GameTimer.start(display);
     }
 
 }
