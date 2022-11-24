@@ -19,15 +19,15 @@ public class WorldDrawable implements Drawable {
 
     @Override
     public void draw(GraphicsContext context) {
-        for (int i = 0; i < properties.getBoundRight(); i++) {
-            for (int j = 0; j < properties.getBoundBottom(); j++) {
+        for (int i = 0; i < properties.getWidthInTiles(); i++) {
+            for (int j = 0; j < properties.getHeightInTiles(); j++) {
                 extracted(context, i, j);
             }
         }
     }
 
     private void extracted(GraphicsContext context, int x, int y) {
-        world.getTile(x + context.getXOffset(), y + context.getYOffset())
+        world.tileFor(x + context.getXOffset(), y + context.getYOffset())
             .ifPresent(t -> context.process(t.getTileImage(),
                 x * properties.getTileSize(),
                 y * properties.getTileSize(),

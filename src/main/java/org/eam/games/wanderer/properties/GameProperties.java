@@ -18,28 +18,21 @@ import lombok.ToString;
 @ToString
 public class GameProperties {
 
-    private static final int DEFAULT_WIDTH_IN_TILES = 30;
-    private static final int DEFAULT_HEIGHT_IN_TILES = 29;
     private static final int DEFAULT_TILE_SIZE = 72;
 
     @Nonnull
     private final Dimension screenSize;
     /**
-     * World width
+     * Screen width in tiles, according to screen resolution
      */
     private final int widthInTiles;
     /**
-     * World height
+     * Screen height in tiles, according to screen resolution
      */
     private final int heightInTiles;
     /**
-     * Screen width in tiles, according to screen resolution
+     * Tiles size. Assumed all tiles are rectangular
      */
-    private final int boundRight;
-    /**
-     * Screen height in tiles, according to screen resolution
-     */
-    private final int boundBottom;
     private final int tileSize;
 
     /**
@@ -48,40 +41,15 @@ public class GameProperties {
     public static GameProperties defaults() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-        int boundRight = 1 + screenSize.width / DEFAULT_TILE_SIZE;
-        int boundBottom = screenSize.height / DEFAULT_TILE_SIZE;
+        int widthInTiles = 1 + screenSize.width / DEFAULT_TILE_SIZE;
+        int heightInTiles = screenSize.height / DEFAULT_TILE_SIZE;
 
         return GameProperties.builder()
             .screenSize(screenSize)
-            .widthInTiles(DEFAULT_WIDTH_IN_TILES)
-            .heightInTiles(DEFAULT_HEIGHT_IN_TILES)
-            .boundRight(boundRight)
-            .boundBottom(boundBottom)
+            .widthInTiles(widthInTiles)
+            .heightInTiles(heightInTiles)
             .tileSize(DEFAULT_TILE_SIZE)
             .build();
-    }
-
-    public int xOffset(int xTile) {
-        return offset(xTile, boundRight / 2, widthInTiles);
-    }
-
-    public int yOffset(int yTile) {
-        return offset(yTile, boundBottom / 2, heightInTiles);
-    }
-
-    /**
-     * Evaluates if correct coordinate is between 0 and threshold, returns 0 while within threshold. When the coordinate
-     * is above the threshold, return the offset, allowing scrolling through the game world.
-     */
-    private static int offset(int coordinate, int threshold, int boundary) {
-        if (coordinate < threshold) {
-            return 0;
-        }
-        if (coordinate < boundary - threshold) {
-            return coordinate - threshold;
-        }
-
-        return boundary - 2 * threshold - 1;// todo fix extra row and col
     }
 
 }

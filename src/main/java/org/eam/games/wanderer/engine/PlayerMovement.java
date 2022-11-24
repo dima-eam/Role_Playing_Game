@@ -2,34 +2,37 @@ package org.eam.games.wanderer.engine;
 
 import java.util.Optional;
 import java.util.function.Predicate;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.eam.games.wanderer.actor.Direction;
 import org.eam.games.wanderer.actor.WithStats;
-import org.eam.games.wanderer.world.Cell;
-import org.eam.games.wanderer.world.Tile;
 import org.eam.games.wanderer.world.World;
+import org.eam.games.wanderer.world.tile.Tile;
 
 /**
  * Encapsulates the current cell of player entity, and controls transition based on direction. Main purpose is movement
  * condition checks and direction for displaying player's entity.
  */
 @Log4j2
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class PlayerMovement implements WithStats {
+public class PlayerMovement extends AbstractMovement implements WithStats {
 
-    @Getter
-    private final Cell current;
-    private final Predicate<Tile> canPass = tile -> !tile.isSolid();
+    private static final Predicate<Tile> CAN_PASS = tile -> !tile.isSolid();
+
+    private final World world;
+
     private Direction direction;
 
+    private PlayerMovement(Position current, World world, Direction direction) {
+        super(current);
+
+        this.world = world;
+        this.direction = direction;
+    }
+
     /**
-     * Initial position in upper-left corner, face down.
+     * Initial position in given coordinates, face down. Currently, no coordinate checks are done.
      */
-    public static PlayerMovement start() {
-        return new PlayerMovement(new Cell(0, 0), Direction.DOWN);
+    public static PlayerMovement start(World world) {
+        return new PlayerMovement(Position.from(world.start()), world, Direction.DOWN);
     }
 
     /**
@@ -61,20 +64,19 @@ public class PlayerMovement implements WithStats {
     /**
      * Changes the direction (always), and location if possible for that direction.
      */
-    void move(Direction direction,
-        World world) { // todo think about injecting world, making tileForCell interface method
+    void move(Direction direction) {
         this.direction = direction;
 
-        Cell newCell = switch (direction) {
-            case DOWN -> current.moveDown();
-            case UP -> current.moveUp();
-            case LEFT -> current.moveLeft();
-            case RIGHT -> current.moveRight();
+        Position next = switch (direction) {
+            case DOWN -> current.down();
+            case UP -> current.up();
+            case LEFT -> current.left();
+            case RIGHT -> current.right();
         };
-        Optional<Tile> tile = world.tileForCell(newCell);
+        Optional<Tile> tile = world.tileFor(next.getXTile(), next.getYTile());
         tile
-//            .filter(canPass)
-            .ifPresent(t -> current.move(newCell));
+//            .filter(CAN_PASS)
+            .ifPresent(t -> current.moveTo(next));
         log.trace("Moving: direction={}, cell={}, nextTile={}", () -> direction, () -> current, () -> tile);
     }
 

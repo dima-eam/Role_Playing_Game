@@ -7,13 +7,12 @@ import lombok.extern.log4j.Log4j2;
 import org.eam.games.wanderer.actor.Actor;
 import org.eam.games.wanderer.actor.Monster;
 import org.eam.games.wanderer.ui.Hud;
-import org.eam.games.wanderer.world.Cell;
 
 @Log4j2
 @AllArgsConstructor
 public class CombatController extends KeyAdapter {
 
-    private final Cell heroCell;
+    private final Position heroPosition;
     private final Actor hero;
     private final Monsters monsters;
     private final Hud hud;
@@ -22,7 +21,7 @@ public class CombatController extends KeyAdapter {
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_SPACE:
-                monsters.forCell(heroCell)
+                monsters.forCell(heroPosition)
                     .forEach(m -> combatRound(hero, m));
                 break;
         }

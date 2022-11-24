@@ -22,6 +22,7 @@ import org.eam.games.wanderer.ui.Display;
 import org.eam.games.wanderer.ui.Game;
 import org.eam.games.wanderer.ui.Hud;
 import org.eam.games.wanderer.world.World;
+import org.eam.games.wanderer.world.room.RoomsWorld;
 
 /**
  * Bootstrapping game in AWT {@link EventQueue}. Creates and run game subsystems, such as hero, monsters, and game
@@ -40,12 +41,15 @@ public class WandererApp {
 
     private static void init() {
         GameProperties properties = GameProperties.defaults();
-        World world = new World(properties.getWidthInTiles(), properties.getHeightInTiles());
+
+        World world = new RoomsWorld();
+//        World world = new MazeWorld(properties.getWidthInTiles(), properties.getHeightInTiles());
+
         Drawable worldDrawable = new WorldDrawable(properties, world);
         Actor hero = new Player();
-        PlayerMovement start = PlayerMovement.start();
+        PlayerMovement start = PlayerMovement.start(world);
         Drawable drawHero = new PlayerDrawable(hero, properties.getTileSize(), start);
-        Camera camera = new Camera(start, properties);
+        Camera camera = new Camera(start, world, properties);
         Monsters monsters = new Monsters(world);
         Hud hud = new Hud(properties, hero, start, monsters);
         MonstersDrawable monstersDrawable = new MonstersDrawable(monsters, properties);
@@ -53,7 +57,7 @@ public class WandererApp {
         display.setDoubleBuffered(true); // todo move inside
         display.setBackground(Color.BLACK);
 
-        Game.run(properties, display, new GameController(), new PlayerController(start, world, monsters),
+        Game.run(properties, display, new GameController(), new PlayerController(start, monsters),
             new CombatController(start.getCurrent(), hero, monsters, hud));
 
         log.info("Game initialized: properties={}", properties);

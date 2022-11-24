@@ -2,15 +2,12 @@ package org.eam.games.wanderer.engine;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import lombok.AllArgsConstructor;
-import org.eam.games.wanderer.actor.Actor;
 import org.eam.games.wanderer.actor.Monster;
 import org.eam.games.wanderer.actor.WithStats;
-import org.eam.games.wanderer.world.Cell;
-import org.eam.games.wanderer.world.Tile;
 import org.eam.games.wanderer.world.World;
+import org.eam.games.wanderer.world.tile.Tile;
 
 public class Monsters implements WithStats {
 
@@ -28,36 +25,36 @@ public class Monsters implements WithStats {
         monsterAmount = INITIAL_MONSTER_AMOUNT;
         monsters = new ArrayList<>(monsterAmount);
 
-        populateMonsters();
+//        populateMonsters();
     }
 
     public void react() {
         for (MonsterMovement monster : monsters) {
-            if (monster.monster.dead()) {
+            if (monster.getMonster().dead()) {
                 continue;
             }
 
-            Cell newCell;
+            Position next;
             do {
-                newCell = monster.nextCell();
-            } while (world.getTile(newCell.getXTile(), newCell.getYTile())
+                next = monster.next();
+            } while (world.tileFor(next.getXTile(), next.getYTile())
                 .map(Tile::isSolid)
                 .orElse(true));
 
-            monster.cell.move(newCell);
+            monster.getCurrent().moveTo(next);
         }
     }
 
-    public void forEach(BiConsumer<Cell, Actor> process) {
+    public void forEach(Consumer<MonsterMovement> process) {
         monsters.stream()
-            .filter(m -> !m.monster.dead())
-            .forEach(m -> process.accept(m.cell, m.monster));
+            .filter(m -> !m.getMonster().dead())
+            .forEach(process::accept);
     }
 
-    public List<Monster> forCell(Cell heroCell) {
+    public List<Monster> forCell(Position position) {
         List<Monster> monstersInCell = monsters.stream()
-            .filter(m -> m.cell.equals(heroCell))
-            .map(m -> m.monster)
+            .filter(m -> m.getCurrent().equals(position))
+            .map(MonsterMovement::getMonster)
             .filter(m -> !m.dead())
             .collect(Collectors.toList());
 
@@ -75,7 +72,7 @@ public class Monsters implements WithStats {
 
     private void populateMonsters() {
         for (int i = 0; i < monsterAmount - 2; i++) {
-            monsters.add(new MonsterMovement(world.findEmptyTile(), new Monster()));
+            monsters.add(new MonsterMovement(Position.from(world.walkableCell()), new Monster()));
         }
 //        Monster keyMonster = new Monster(1);
 //        monsters.add(new MonsterMovement(world.findEmptyTile(), keyMonster));
@@ -85,29 +82,11 @@ public class Monsters implements WithStats {
 
     public void getStronger() {
         for (MonsterMovement monster : monsters) {
-            if (monster.monster.dead()) {
+            if (monster.getMonster().dead()) {
                 continue;
             }
-            monster.monster.getStronger();
+            monster.getMonster().getStronger();
         }
-    }
-
-    @AllArgsConstructor
-    private static class MonsterMovement {
-
-        private final Cell cell;
-        private final Monster monster;
-
-        public Cell nextCell() {
-            return switch (Dice.rollDice(5)) {
-                case 1 -> cell.moveUp();
-                case 2 -> cell.moveDown();
-                case 3 -> cell.moveLeft();
-                case 4 -> cell.moveRight();
-                default -> cell;
-            };
-        }
-
     }
 
 }

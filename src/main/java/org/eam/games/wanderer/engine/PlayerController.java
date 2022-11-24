@@ -4,16 +4,15 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import lombok.AllArgsConstructor;
 import org.eam.games.wanderer.actor.Direction;
-import org.eam.games.wanderer.world.World;
 
 /**
- * Processes key events and controls player movements via setting player's position.
+ * Processes key events and controls player movements via setting player's position. Also fires monsters reactions on
+ * each move.
  */
 @AllArgsConstructor
 public class PlayerController extends KeyAdapter {
 
     private final PlayerMovement playerMovement;
-    private final World world;
     private final Monsters monsters;
 
     @Override
@@ -31,7 +30,7 @@ public class PlayerController extends KeyAdapter {
     }
 
     private void processMove(Direction direction) {
-        playerMovement.move(direction, world);
+        playerMovement.move(direction);
         monsters.react();
     }
 

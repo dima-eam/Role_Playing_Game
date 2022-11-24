@@ -16,10 +16,10 @@ public class Player extends Actor {
     private static final String FACE_UP = "/tiles/hero-up.gif";
 
     private final Map<Direction, Image> imagesByDirection = Map.of(
-        Direction.RIGHT, fromFilename(FACE_RIGHT),
-        Direction.LEFT, fromFilename(FACE_LEFT),
-        Direction.UP, fromFilename(FACE_UP),
-        Direction.DOWN, fromFilename(FACE_DOWN)
+        Direction.RIGHT, fromResource(FACE_RIGHT),
+        Direction.LEFT, fromResource(FACE_LEFT),
+        Direction.UP, fromResource(FACE_UP),
+        Direction.DOWN, fromResource(FACE_DOWN)
     );
 
     public Player() { // todo externalize

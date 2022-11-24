@@ -49,7 +49,7 @@ Face Right ![Hero Face Right](src/main/resources/tiles/hero-right.gif)
 
 ### Game Screenshot
 
-![Game Screenshot](src/main/resources/tiles/Game_Screenshot.png)
+![Game Screenshot](Game_Screenshot.png)
 
 ## Engine implementation
 
@@ -62,3 +62,4 @@ turn.
 2. Refactor HUD to be reactive panels
 3. Add boss with next level condition
 4. Add levelup feature
+5. Think about Z-axis implementation, with stairs and displaying only particular elevation level rooms
