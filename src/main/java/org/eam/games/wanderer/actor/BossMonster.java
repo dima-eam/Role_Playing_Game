@@ -8,10 +8,10 @@ public class BossMonster extends Monster {
     private static final String BOSS_IMAGE = "/tiles/boss.png";
 
     private final Map<Direction, Image> imagesByDirection = Map.of(
-        Direction.RIGHT, fromFilename(BOSS_IMAGE),
-        Direction.LEFT, fromFilename(BOSS_IMAGE),
-        Direction.UP, fromFilename(BOSS_IMAGE),
-        Direction.DOWN, fromFilename(BOSS_IMAGE)
+        Direction.RIGHT, fromResource(BOSS_IMAGE),
+        Direction.LEFT, fromResource(BOSS_IMAGE),
+        Direction.UP, fromResource(BOSS_IMAGE),
+        Direction.DOWN, fromResource(BOSS_IMAGE)
     );
 
     public BossMonster() {

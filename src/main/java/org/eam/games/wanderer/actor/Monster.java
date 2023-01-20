@@ -13,10 +13,10 @@ public class Monster extends Actor {
     private static final String MONSTER_IMAGE = "/tiles/monster.gif";
 
     private final Map<Direction, Image> imagesByDirection = Map.of(
-        Direction.RIGHT, fromFilename(MONSTER_IMAGE),
-        Direction.LEFT, fromFilename(MONSTER_IMAGE),
-        Direction.UP, fromFilename(MONSTER_IMAGE),
-        Direction.DOWN, fromFilename(MONSTER_IMAGE)
+        Direction.RIGHT, fromResource(MONSTER_IMAGE),
+        Direction.LEFT, fromResource(MONSTER_IMAGE),
+        Direction.UP, fromResource(MONSTER_IMAGE),
+        Direction.DOWN, fromResource(MONSTER_IMAGE)
     );
 
     public Monster() {

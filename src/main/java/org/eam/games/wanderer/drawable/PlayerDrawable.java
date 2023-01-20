@@ -22,9 +22,7 @@ public class PlayerDrawable implements Drawable {
     @Override
     public void draw(GraphicsContext context) {
         context.process(actor.imageForDirection(movement.direction()),
-            (movement.xTile() - context.getXOffset()) * step,
-            (movement.yTile() - context.getYOffset()) * step,
-            step);
+            movement.xOffset(context.getXOffset(), step), movement.yOffset(context.getYOffset(), step), step);
     }
 
 }

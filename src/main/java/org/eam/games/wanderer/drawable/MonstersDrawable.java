@@ -18,9 +18,8 @@ public class MonstersDrawable implements Drawable {
     }
 
     private void drawMonsters(Graphics graphics, int xOffset, int yOffset) {
-        monsters.forEach((cell, actor) -> graphics.drawImage(actor.imageForDirection(Direction.UP),
-            (cell.getXTile() - xOffset) * properties.getTileSize(),
-            (cell.getYTile() - yOffset) * properties.getTileSize(),
+        monsters.forEach(m -> graphics.drawImage(m.getMonster().imageForDirection(Direction.UP),
+            m.xOffset(xOffset, properties.getTileSize()), m.yOffset(yOffset, properties.getTileSize()),
             null));
     }
 

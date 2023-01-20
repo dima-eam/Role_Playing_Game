@@ -1,106 +1,35 @@
 package org.eam.games.wanderer.world;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.Random;
-import lombok.extern.log4j.Log4j2;
+import org.eam.games.wanderer.world.tile.Tile;
 
 /**
- * Represents game world (or, "labyrinth"), randomly generated at instantiation from two possible tiles: wall, and
- * grass. Generated structure is typically bigger than one screen, so drawing system must take care of not drawing
- * images, which are beyond the screen.
+ * Defines a set of methods for any game world implementation, focused on work with {@link Tile} and {@link Cell}
+ * instances for interaction, placement etc.
  */
-@Log4j2
-public final class World {
-
-    private static final Random RANDOM = new Random();
-    private static final Tile WALL = new Tile("/tiles/wall.jpg", true);
-    private static final Tile GRASS = new Tile("/tiles/grass.png", false);
+public interface World {
 
     /**
-     * Each element (sub-list) emulates one row of tiles. Allows to access tiles by passing xTile and yTile coordinates,
-     * respectively
+     * Returns a walkable cell (the one where a monster/player can stay/walk), primarily for placing entities.
      */
-    private final List<List<Tile>> layout = new ArrayList<>();
-
-    private final int widthInTiles;
-    private final int heightInTiles;
-
-    public World(int widthInTiles, int heightInTiles) {
-        this.widthInTiles = widthInTiles;
-        this.heightInTiles = heightInTiles;
-
-        generate();
-    }
+    Cell walkableCell();
 
     /**
-     * Returns an optional tile for world generation, building a path for a monster, or for other checks.
+     * Optional tile for world generation, building a path for a monster, or for other checks. Tries to find a tile for
+     * given cell. Might be empty if the world is not rectangular, or given coordinates have no tile.
      */
-    public Optional<Tile> getTile(int xTile, int yTile) {
-        if (xTile < 0 || xTile >= widthInTiles || yTile < 0 || yTile >= heightInTiles) {
-            return Optional.empty();
-        } else {
-            return Optional.of(layout.get(xTile).get(yTile));
-        }
+    Optional<Tile> tileForCell(Cell newCell);
+
+    default Optional<Tile> tileFor(int xTile, int yTile) {
+        return tileForCell(new Cell(xTile, yTile));
     }
 
-    public Cell findEmptyTile() {
-        int x;
-        int y;
+    int widthInTiles();
 
-        do {
-            x = RANDOM.nextInt(widthInTiles);
-            y = RANDOM.nextInt(heightInTiles);
-        } while (getTile(x, y).orElse(WALL).isSolid());
+    int heightInTiles();
 
-        return new Cell(x, y);
-    }
-
-    public Optional<Tile> tileForCell(Cell newCell) {
-        return getTile(newCell.getXTile(), newCell.getYTile());
-    }
-
-    /**
-     * Generation logic first fill the entire world with walls, and then "carves" the maze with grass tiles. Starting
-     * position (0, 0) id always a grass tile. Carving logic is recursive, starts from tile (0, 0), and then replaces
-     * adjacent tiles with grass until maze border is reached.
-     */
-    private void generate() {
-        for (int x = 0; x < widthInTiles; x++) {
-            List<Tile> row = new ArrayList<>();
-            for (int y = 0; y < heightInTiles; y++) {
-                row.add(WALL);
-            }
-            layout.add(row);
-        }
-
-        layout.get(0).set(0, GRASS);
-        carve(0, 0);
-    }
-
-    private void carve(int x, int y) {
-        int[] moveX = {1, -1, 0, 0};
-        int[] moveY = {0, 0, 1, -1};
-
-        int dir = RANDOM.nextInt(4);
-        int count = 0;
-
-        while (count < 4) {
-            int x1 = x + moveX[dir];
-            int y1 = y + moveY[dir];
-            int x2 = x1 + moveX[dir];
-            int y2 = y1 + moveY[dir];
-            if (getTile(x2, y2).orElse(GRASS).isSolid()) {
-                layout.get(x1).set(y1, GRASS);
-                layout.get(x2).set(y2, GRASS);
-                carve(x2, y2);
-            } else {
-                dir = (dir + 1) % 4;
-                count += 1;
-            }
-        }
+    default Cell start() {
+        return new Cell(0, 0);
     }
 
 }
-
