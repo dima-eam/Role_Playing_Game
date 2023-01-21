@@ -1,6 +1,8 @@
 package org.eam.games.wanderer.engine;
 
+import java.awt.Image;
 import lombok.Getter;
+import org.eam.games.wanderer.actor.Direction;
 import org.eam.games.wanderer.actor.Monster;
 
 @Getter
@@ -9,7 +11,7 @@ public class MonsterMovement extends AbstractMovement {
     private final Monster monster;
 
     MonsterMovement(Position current, Monster monster) {
-        super(current);
+        super(current, Direction.UP);
 
         this.monster = monster;
     }
@@ -22,6 +24,10 @@ public class MonsterMovement extends AbstractMovement {
             case 4 -> current.right();
             default -> current;
         };
+    }
+
+    public Image image() {
+        return monster.imageForDirection(direction);
     }
 
 }

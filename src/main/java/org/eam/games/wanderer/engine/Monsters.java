@@ -7,11 +7,11 @@ import java.util.stream.Collectors;
 import org.eam.games.wanderer.actor.Monster;
 import org.eam.games.wanderer.actor.WithStats;
 import org.eam.games.wanderer.world.World;
-import org.eam.games.wanderer.world.tile.Tile;
+import org.eam.games.wanderer.engine.tile.Tile;
 
 public class Monsters implements WithStats {
 
-    private static final int INITIAL_MONSTER_AMOUNT = 20;
+    private static final int COUNT = 3;
 
     private final World world;
     private final List<MonsterMovement> monsters;
@@ -22,10 +22,10 @@ public class Monsters implements WithStats {
     public Monsters(World world) {
         this.world = world;
 
-        monsterAmount = INITIAL_MONSTER_AMOUNT;
+        monsterAmount = COUNT;
         monsters = new ArrayList<>(monsterAmount);
 
-//        populateMonsters();
+        populateMonsters();
     }
 
     public void react() {

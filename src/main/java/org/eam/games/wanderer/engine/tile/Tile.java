@@ -1,4 +1,4 @@
-package org.eam.games.wanderer.world.tile;
+package org.eam.games.wanderer.engine.tile;
 
 import java.awt.Image;
 import java.nio.file.Path;

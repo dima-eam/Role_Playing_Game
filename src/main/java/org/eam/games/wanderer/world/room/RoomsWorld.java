@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import lombok.extern.log4j.Log4j2;
+import org.eam.games.wanderer.engine.tile.OrientedTiles;
+import org.eam.games.wanderer.engine.tile.OrientedTileset.Orientation;
+import org.eam.games.wanderer.engine.tile.Tile;
+import org.eam.games.wanderer.engine.tile.TilesetFromFile;
 import org.eam.games.wanderer.world.Cell;
 import org.eam.games.wanderer.world.World;
-import org.eam.games.wanderer.world.tile.OrientedTileset;
-import org.eam.games.wanderer.world.tile.Tile;
-import org.eam.games.wanderer.world.tile.Tiles;
-import org.eam.games.wanderer.world.tile.TilesetFromFile;
 
 /**
  * Represents game world as sequence of randomly generated rooms. There is an external boundary, which may be considered
@@ -21,9 +21,11 @@ public final class RoomsWorld implements World {
 
     private static final Random RANDOM = new Random();
 
-    private final Tiles tiles = new Tiles(new TilesetFromFile("/tiles/tilesets/walls.yml"));
+    private static final Tile FILL = new Tile("/tiles/fill-dark.png", true);
+
+    private static final OrientedTiles TILES = new OrientedTiles(
+        new TilesetFromFile("/tiles/tilesets/walls.yml", Orientation::from));
     //    private final Tiles tiles = new Tiles(new TilesetFromFolder("/tiles/wall"));
-    private final Tile fill = new Tile("/tiles/fill-dark.png", true);
 
     /**
      * Each element (sub-list) emulates one column of tiles. Allows to access tiles by passing xTile and yTile
@@ -36,12 +38,12 @@ public final class RoomsWorld implements World {
     private final Cell start;
 
     public RoomsWorld() {
-        Rooms generator = new Rooms(tiles);
+        Rooms generator = new Rooms(TILES);
         GeneratedRooms rooms = generator.generate();
 
         widthInTiles = rooms.getWidth();
         heightInTiles = rooms.getHeight();
-        start = new Cell( Math.abs(rooms.getWorldStart().getX()) + 1,
+        start = new Cell(Math.abs(rooms.getWorldStart().getX()) + 1,
             Math.abs(rooms.getWorldStart().getY()) + 1);
 
         fillLayout(rooms);
@@ -63,7 +65,9 @@ public final class RoomsWorld implements World {
             int x = RANDOM.nextInt(widthInTiles);
             int y = RANDOM.nextInt(heightInTiles);
             cell = new Cell(x, y);
-        } while (tileForCell(cell).orElse(tiles.nextTile(OrientedTileset.TileType.CENTER)).isSolid());
+        } while (tileForCell(cell)
+            .orElse(FILL)
+            .isSolid());
 
         return cell;
     }
@@ -88,7 +92,7 @@ public final class RoomsWorld implements World {
         for (int x = 0; x < widthInTiles; x++) {
             List<Tile> col = new ArrayList<>();
             for (int y = 0; y < heightInTiles; y++) {
-                col.add(fill);
+                col.add(FILL);
             }
             layout.add(col);
         }

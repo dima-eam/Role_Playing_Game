@@ -1,4 +1,4 @@
-package org.eam.games.wanderer.world.tile;
+package org.eam.games.wanderer.engine.tile;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
