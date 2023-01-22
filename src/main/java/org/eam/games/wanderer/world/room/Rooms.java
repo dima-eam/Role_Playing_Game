@@ -36,7 +36,7 @@ class Rooms {
 
     private void generateNeighbors(Room prevRoom, String direction, Coordinates worldStart, Coordinates worldEnd,
         List<Room> rooms, int depth) {
-        if (depth > 1) {
+        if (depth > 15) {
             return;
         }
 

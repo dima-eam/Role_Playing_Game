@@ -7,11 +7,10 @@ import java.util.stream.Collectors;
 import org.eam.games.wanderer.actor.Monster;
 import org.eam.games.wanderer.actor.WithStats;
 import org.eam.games.wanderer.world.World;
-import org.eam.games.wanderer.engine.tile.Tile;
 
 public class Monsters implements WithStats {
 
-    private static final int COUNT = 3;
+    private static final int COUNT = 40;
 
     private final World world;
     private final List<MonsterMovement> monsters;
@@ -34,21 +33,14 @@ public class Monsters implements WithStats {
                 continue;
             }
 
-            Position next;
-            do {
-                next = monster.next();
-            } while (world.tileFor(next.getXTile(), next.getYTile())
-                .map(Tile::isSolid)
-                .orElse(true));
-
-            monster.getCurrent().moveTo(next);
+            monster.react();
         }
     }
 
     public void forEach(Consumer<MonsterMovement> process) {
         monsters.stream()
             .filter(m -> !m.getMonster().dead())
-            .forEach(process::accept);
+            .forEach(process);
     }
 
     public List<Monster> forCell(Position position) {
@@ -71,8 +63,8 @@ public class Monsters implements WithStats {
     }
 
     private void populateMonsters() {
-        for (int i = 0; i < monsterAmount - 2; i++) {
-            monsters.add(new MonsterMovement(Position.from(world.walkableCell()), new Monster()));
+        for (int i = 0; i < monsterAmount; i++) {
+            monsters.add(new MonsterMovement(new Monster(), world));
         }
 //        Monster keyMonster = new Monster(1);
 //        monsters.add(new MonsterMovement(world.findEmptyTile(), keyMonster));
