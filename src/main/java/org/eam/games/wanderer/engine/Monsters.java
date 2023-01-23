@@ -27,10 +27,13 @@ public class Monsters implements WithStats {
         populateMonsters();
     }
 
-    public void react() {
+    public void react(Position player) {
         for (MonsterMovement monster : monsters) {
             if (monster.getMonster().dead()) {
                 continue;
+            }
+            if (monster.getCurrent().equals(player)) {
+                stats += monster.getMonster().stats(); // todo replace with object
             }
 
             monster.react();
@@ -44,17 +47,11 @@ public class Monsters implements WithStats {
     }
 
     public List<Monster> forCell(Position position) {
-        List<Monster> monstersInCell = monsters.stream()
+        return monsters.stream()
             .filter(m -> m.getCurrent().equals(position))
             .map(MonsterMovement::getMonster)
             .filter(m -> !m.dead())
             .collect(Collectors.toList());
-
-        stats = monstersInCell.stream()
-            .map(Monster::stats)
-            .collect(Collectors.joining(", "));
-
-        return monstersInCell;
     }
 
     @Override

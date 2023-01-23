@@ -15,7 +15,6 @@ import org.eam.games.wanderer.drawable.WithImage;
  * methods.
  */
 @ToString
-@AllArgsConstructor
 public abstract class Actor implements WithImage, WithStats {
 
     protected int maxHealthPoint;

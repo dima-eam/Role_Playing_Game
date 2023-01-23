@@ -31,7 +31,7 @@ public class PlayerController extends KeyAdapter {
 
     private void processMove(Direction direction) {
         playerMovement.move(direction);
-        monsters.react();
+        monsters.react(playerMovement.getCurrent());
     }
 
 }

@@ -4,15 +4,15 @@ tileSize: 16
 tiles:
     - id: 1
       descriptor: "l"
-      row: 1
-      col: 1
+      row: 0
+      col: 0
     - id: 2
       descriptor: "r"
-      row: 1
-      col: 1
+      row: 0
+      col: 2
     - id: 3
       descriptor: "u"
-      row: 1
+      row: 0
       col: 1
     - id: 4
       descriptor: "d"
