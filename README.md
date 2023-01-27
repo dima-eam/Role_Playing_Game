@@ -64,3 +64,4 @@ turn.
 4. Add levelup feature
 5. Inject everything that may be configurable: counts, file paths, sizes, etc
 6. Think about Z-axis implementation, with stairs and displaying only particular elevation level rooms
+7. multi-tile entities

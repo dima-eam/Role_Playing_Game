@@ -1,7 +1,9 @@
 package org.eam.games.wanderer.engine;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import org.eam.games.wanderer.actor.Monster;
@@ -12,11 +14,12 @@ public class Monsters implements WithStats {
 
     private static final int COUNT = 40;
 
+
+    private final Set<WithStats> stats = new HashSet<>();
+
     private final World world;
     private final List<MonsterMovement> monsters;
     private final int monsterAmount;
-
-    private String stats = "";
 
     public Monsters(World world) {
         this.world = world;
@@ -30,10 +33,11 @@ public class Monsters implements WithStats {
     public void react(Position player) {
         for (MonsterMovement monster : monsters) {
             if (monster.getMonster().dead()) {
+                stats.remove(monster.getMonster());
                 continue;
             }
             if (monster.getCurrent().equals(player)) {
-                stats += monster.getMonster().stats(); // todo replace with object
+                stats.add(monster.getMonster());
             }
 
             monster.react();
@@ -56,7 +60,9 @@ public class Monsters implements WithStats {
 
     @Override
     public String stats() {
-        return stats;
+        return stats.stream()
+            .map(WithStats::stats)
+            .collect(Collectors.joining(","));
     }
 
     private void populateMonsters() {
@@ -74,8 +80,14 @@ public class Monsters implements WithStats {
             if (monster.getMonster().dead()) {
                 continue;
             }
-            monster.getMonster().getStronger();
+            monster.getMonster().levelUp();
         }
+    }
+
+    public void reset() {
+        monsters.clear();
+
+        populateMonsters();
     }
 
 }

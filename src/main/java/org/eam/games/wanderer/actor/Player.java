@@ -30,15 +30,13 @@ public class Player extends Actor {
             " | DEF: " + defendPoint;
     }
 
-    public void levelUp() {
-        int chance = rollDice(10);
-//        if (chance == 1) {
-//            healthPoint = maxHealthPoint;
-//        } else if (chance <= 4) {
-//            setHealthPoint(healthPoint + healthPoint / 3);
-//        } else {
-//            setHealthPoint(healthPoint + healthPoint / 10);
-//        }
+    @Override
+    public void reset() {
+        super.reset();
+
+        maxHealthPoint = 20 + 3 * rollDice();
+        defendPoint = 2 * rollDice();
+        strikePoint = 5 + rollDice();
     }
 
 }

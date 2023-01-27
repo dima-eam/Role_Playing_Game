@@ -32,7 +32,7 @@ public class CombatController extends KeyAdapter {
         hero.attack(monster);
         if (monster.dead()) {
             log.info("Monster killed, getting stronger");
-            hero.getStronger();
+            hero.levelUp();
             monsters.getStronger();
             return;
         }
@@ -40,10 +40,14 @@ public class CombatController extends KeyAdapter {
         monster.attack(hero);
         if (hero.dead()) {
             log.info("Game over");
-            hud.gameOver();
+            hud.gameOver(this::reset);
         }
+    }
 
-
+    private void reset() {
+        hero.reset();
+        monsters.reset();
+        heroPosition.reset();
     }
 
 }

@@ -58,7 +58,7 @@ public class WandererApp {
         display.setBackground(Color.BLACK);
 
         Game.run(properties, display, new GameController(), new PlayerController(start, monsters),
-            new CombatController(start.getCurrent(), hero, monsters, hud));
+            new CombatController(start.getCurrent(), hero, monsters, hud), hud);
 
         log.info("Game initialized: properties={}", properties);
     }

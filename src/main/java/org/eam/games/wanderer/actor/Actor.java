@@ -4,7 +4,6 @@ import static org.eam.games.wanderer.engine.Dice.rollDice;
 
 import java.awt.Image;
 import java.util.Map;
-import lombok.AllArgsConstructor;
 import lombok.ToString;
 import org.eam.games.wanderer.drawable.WithImage;
 
@@ -45,7 +44,7 @@ public abstract class Actor implements WithImage, WithStats {
         return 2 * rollDice() + this.strikePoint;
     }
 
-    public void getStronger() {
+    public void levelUp() {
         maxHealthPoint += rollDice();
         healthPoint = Math.min(healthPoint + maxHealthPoint / 2, maxHealthPoint);
         defendPoint += rollDice();
@@ -58,5 +57,9 @@ public abstract class Actor implements WithImage, WithStats {
     }
 
     abstract Map<Direction, Image> imagesByDirection();
+
+    public void reset() {
+        level = 0;
+    }
 
 }

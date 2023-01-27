@@ -14,12 +14,12 @@ public class Monster extends Actor {
     private static final MonsterTiles TILES = new MonsterTiles();
 
     public Monster() {
-        super(10 * rollDice(), (int) Math.ceil(rollDice() / 2.0), rollDice());
+        super(10 * rollDice(), rollDice(), 2 * rollDice());
         healthPoint = maxHealthPoint;
     }
 
     @Override
-    public String stats() { // todo reveal stats based on hero's level or skill check
+    public String stats() {
         return "Monster(" + level + ")" + " | HP: " + healthPoint + "/" + maxHealthPoint;
     }
 
