@@ -1,9 +1,10 @@
-package org.eam.games.wanderer.world.tile;
+package org.eam.games.wanderer.engine.tile;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.eam.games.wanderer.engine.tile.OrientedTileset.Orientation;
 
 /**
  * Represents all the attributes for a single tile, such as position in a file, id, properties, etc.
@@ -24,7 +25,7 @@ class TileMetadata {
     private int col;
     /**
      * Any logical descriptor of thi tile. Might be type, orientation, etc. Value is bound to particular tileset
-     * implementation, e.g. {@link OrientedTileset.TileType}
+     * implementation, e.g. {@link Orientation}
      */
     private String descriptor;
 

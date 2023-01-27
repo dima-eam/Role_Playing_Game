@@ -5,7 +5,7 @@
 //import java.util.Optional;
 //import java.util.Random;
 //import lombok.extern.log4j.Log4j2;
-//import org.eam.games.wanderer.world.tile.Tile;
+//import org.eam.games.wanderer.engine.tile.Tile;
 //
 ///**
 // * Represents game world (or, "labyrinth"), randomly generated at instantiation from two possible tiles: wall, and

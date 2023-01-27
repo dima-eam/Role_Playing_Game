@@ -1,7 +1,8 @@
-package org.eam.games.wanderer.world.tile;
+package org.eam.games.wanderer.engine.tile;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import lombok.AccessLevel;
@@ -21,18 +22,19 @@ class TilesetMetadata implements WithImage {
     private List<TileMetadata> tiles;
 
     @SneakyThrows
-    List<TileView> tiles() {
+    List<TileView<TileType>> tiles(Function<String, TileType> typeFromString) {
         BufferedImage tilesetImage = fromResource(tilesetFilename);
 
         return tiles.stream()
-            .map(m -> toTileView(tilesetImage, m))
+            .map(m -> toTileView(tilesetImage, m, typeFromString))
             .collect(Collectors.toList());
     }
 
-    private TileView toTileView(BufferedImage tilesetImage, TileMetadata metadata) {
+    private TileView<TileType> toTileView(BufferedImage tilesetImage, TileMetadata metadata,
+        Function<String, TileType> typeFromString) {
         BufferedImage image = tilesetImage.getSubimage(metadata.getCol() * tileSize, metadata.getRow() * tileSize,
             tileSize, tileSize);
-        return TileView.from(image, metadata);
+        return TileView.from(image, metadata, typeFromString);
     }
 
 }

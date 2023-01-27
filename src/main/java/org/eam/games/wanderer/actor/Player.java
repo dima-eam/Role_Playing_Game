@@ -4,23 +4,14 @@ import static org.eam.games.wanderer.engine.Dice.rollDice;
 
 import java.awt.Image;
 import java.util.Map;
+import org.eam.games.wanderer.engine.tile.HeroTiles;
 
 /**
  * Game character, controlled by player.
  */
 public class Player extends Actor {
 
-    private static final String FACE_DOWN = "/tiles/hero-down.gif";
-    private static final String FACE_RIGHT = "/tiles/hero-right.gif";
-    private static final String FACE_LEFT = "/tiles/hero-left.gif";
-    private static final String FACE_UP = "/tiles/hero-up.gif";
-
-    private final Map<Direction, Image> imagesByDirection = Map.of(
-        Direction.RIGHT, fromResource(FACE_RIGHT),
-        Direction.LEFT, fromResource(FACE_LEFT),
-        Direction.UP, fromResource(FACE_UP),
-        Direction.DOWN, fromResource(FACE_DOWN)
-    );
+    private static final HeroTiles TILES = new HeroTiles();
 
     public Player() { // todo externalize
         super(20 + 3 * rollDice(), 2 * rollDice(), 5 + rollDice());
@@ -28,7 +19,7 @@ public class Player extends Actor {
 
     @Override
     Map<Direction, Image> imagesByDirection() {
-        return imagesByDirection;
+        return TILES.imagesByDirection();
     }
 
     @Override
@@ -39,15 +30,13 @@ public class Player extends Actor {
             " | DEF: " + defendPoint;
     }
 
-    public void levelUp() {
-        int chance = rollDice(10);
-//        if (chance == 1) {
-//            healthPoint = maxHealthPoint;
-//        } else if (chance <= 4) {
-//            setHealthPoint(healthPoint + healthPoint / 3);
-//        } else {
-//            setHealthPoint(healthPoint + healthPoint / 10);
-//        }
+    @Override
+    public void reset() {
+        super.reset();
+
+        maxHealthPoint = 20 + 3 * rollDice();
+        defendPoint = 2 * rollDice();
+        strikePoint = 5 + rollDice();
     }
 
 }

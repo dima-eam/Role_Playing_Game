@@ -4,34 +4,28 @@ import static org.eam.games.wanderer.engine.Dice.rollDice;
 
 import java.awt.Image;
 import java.util.Map;
+import org.eam.games.wanderer.engine.tile.MonsterTiles;
 
 /**
  * Represents AI controlled enemy.
  */
 public class Monster extends Actor {
 
-    private static final String MONSTER_IMAGE = "/tiles/monster.gif";
-
-    private final Map<Direction, Image> imagesByDirection = Map.of(
-        Direction.RIGHT, fromResource(MONSTER_IMAGE),
-        Direction.LEFT, fromResource(MONSTER_IMAGE),
-        Direction.UP, fromResource(MONSTER_IMAGE),
-        Direction.DOWN, fromResource(MONSTER_IMAGE)
-    );
+    private static final MonsterTiles TILES = new MonsterTiles();
 
     public Monster() {
-        super(10 * rollDice(), (int) Math.ceil(rollDice() / 2.0), rollDice());
+        super(10 * rollDice(), rollDice(), 2 * rollDice());
         healthPoint = maxHealthPoint;
     }
 
     @Override
-    public String stats() { // todo reveal stats based on hero's level or skill check
+    public String stats() {
         return "Monster(" + level + ")" + " | HP: " + healthPoint + "/" + maxHealthPoint;
     }
 
     @Override
     Map<Direction, Image> imagesByDirection() {
-        return imagesByDirection;
+        return TILES.imagesByDirection();
     }
 
 }

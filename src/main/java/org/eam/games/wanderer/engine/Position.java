@@ -2,6 +2,7 @@ package org.eam.games.wanderer.engine;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.EqualsAndHashCode.Exclude;
 import lombok.Getter;
 import org.eam.games.wanderer.world.Cell;
 
@@ -14,27 +15,35 @@ import org.eam.games.wanderer.world.Cell;
 @EqualsAndHashCode
 class Position {
 
+    @Exclude
+    private final Cell start;
     private int xTile;
     private int yTile;
 
+    public Position(Cell cell) {
+        start = cell;
+        xTile = cell.getXTile();
+        yTile = cell.getYTile();
+    }
+
     static Position from(Cell cell) {
-        return new Position(cell.getXTile(), cell.getYTile());
+        return new Position(cell);
     }
 
     Position down() {
-        return new Position(xTile, yTile + 1);
+        return new Position(start, xTile, yTile + 1);
     }
 
     Position up() {
-        return new Position(xTile, yTile - 1);
+        return new Position(start, xTile, yTile - 1);
     }
 
     Position left() {
-        return new Position(xTile - 1, yTile);
+        return new Position(start, xTile - 1, yTile);
     }
 
     Position right() {
-        return new Position(xTile + 1, yTile);
+        return new Position(start, xTile + 1, yTile);
     }
 
     void moveTo(Position position) {
@@ -48,6 +57,11 @@ class Position {
 
     int yOffset(int yOffset) {
         return yTile - yOffset;
+    }
+
+    public void reset() {
+        xTile = start.getXTile();
+        yTile = start.getYTile();
     }
 
 }

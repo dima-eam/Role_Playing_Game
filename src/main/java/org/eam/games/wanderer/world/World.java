@@ -1,7 +1,7 @@
 package org.eam.games.wanderer.world;
 
 import java.util.Optional;
-import org.eam.games.wanderer.world.tile.Tile;
+import org.eam.games.wanderer.engine.tile.Tile;
 
 /**
  * Defines a set of methods for any game world implementation, focused on work with {@link Tile} and {@link Cell}

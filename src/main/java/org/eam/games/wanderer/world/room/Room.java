@@ -1,19 +1,19 @@
 package org.eam.games.wanderer.world.room;
 
-import static org.eam.games.wanderer.world.tile.OrientedTileset.TileType.HORIZONTAL;
-import static org.eam.games.wanderer.world.tile.OrientedTileset.TileType.LOWER_LEFT;
-import static org.eam.games.wanderer.world.tile.OrientedTileset.TileType.LOWER_RIGHT;
-import static org.eam.games.wanderer.world.tile.OrientedTileset.TileType.UPPER_LEFT;
-import static org.eam.games.wanderer.world.tile.OrientedTileset.TileType.UPPER_RIGHT;
-import static org.eam.games.wanderer.world.tile.OrientedTileset.TileType.VERTICAL;
+import static org.eam.games.wanderer.engine.tile.OrientedTileset.Orientation.HORIZONTAL;
+import static org.eam.games.wanderer.engine.tile.OrientedTileset.Orientation.LOWER_LEFT;
+import static org.eam.games.wanderer.engine.tile.OrientedTileset.Orientation.LOWER_RIGHT;
+import static org.eam.games.wanderer.engine.tile.OrientedTileset.Orientation.UPPER_LEFT;
+import static org.eam.games.wanderer.engine.tile.OrientedTileset.Orientation.UPPER_RIGHT;
+import static org.eam.games.wanderer.engine.tile.OrientedTileset.Orientation.VERTICAL;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
-import org.eam.games.wanderer.world.tile.Tile;
-import org.eam.games.wanderer.world.tile.Tiles;
+import org.eam.games.wanderer.engine.tile.Tile;
+import org.eam.games.wanderer.engine.tile.OrientedTiles;
 
 /**
  * Set of tiles representing a single room, with walls, corners, and floor. Each room has a location and size, defined
@@ -40,7 +40,7 @@ class Room {
      * Generates a room as walls, then corners, then floor, starting from given coordinates. Height and width are random
      * in some short interval of values, like 4-8 tiles.
      */
-    static Room room(int xCell, int yCell, Tiles tiles) {
+    static Room room(int xCell, int yCell, OrientedTiles tiles) {
         int width = RANDOM.nextInt(6, 9);
         int height = RANDOM.nextInt(6, 9);
         Room room = new Room(xCell, yCell, width, height);
@@ -72,7 +72,7 @@ class Room {
     /**
      * Generates a passage between two room as another room with some special properties, like no tiles in walls.
      */
-    public static Room verticalPassage(int x, int y, int length, Tiles tiles) {
+    public static Room verticalPassage(int x, int y, int length, OrientedTiles tiles) {
         Room room = new Room(x, y, 3, length);
         for (int i = 0; i < room.height; i++) {
             room.layout.put(new Coordinates(x, y + i), tiles.nextTile(VERTICAL));
@@ -87,7 +87,7 @@ class Room {
         return room;
     }
 
-    public static Room horizontalPassage(int x, int y, int length, Tiles tiles) {
+    public static Room horizontalPassage(int x, int y, int length, OrientedTiles tiles) {
         Room room = new Room(x, y, length, 3);
         for (int i = 0; i < room.width; i++) {
             room.layout.put(new Coordinates(x + i, y), tiles.nextTile(HORIZONTAL));

@@ -1,13 +1,11 @@
-package org.eam.games.wanderer.world.tile;
+package org.eam.games.wanderer.engine.tile;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 import javax.annotation.Nonnull;
 
 /**
  * Represents a set of tiles, which are oriented. That is, horizontal, vertical, angles etc. tiles to form walls, roads,
- * rivers and other similar structures. Such a tile belongs to one of {@link TileType} below, codified like that:
+ * rivers and other similar structures. Such a tile belongs to one of {@link Orientation} below, codified like that:
  * <pre>
  * UL H1 UR
  * V1 C  V2
@@ -18,11 +16,9 @@ import javax.annotation.Nonnull;
  * tiles are VM for vertical tile merged into horizontal, and HML/HMR for two ends of horizontal tile, merged into
  * vertical.
  */
-public interface OrientedTileset {
+public interface OrientedTileset extends Tileset {
 
-    Map<TileType, List<Tile>> tileset();
-
-    enum TileType {
+    enum Orientation implements TileType {
 
         VERTICAL("v\\d"),
         HORIZONTAL("h\\d"),
@@ -37,11 +33,11 @@ public interface OrientedTileset {
 
         private final String suffix;
 
-        TileType(String suffix) {
+        Orientation(String suffix) {
             this.suffix = suffix;
         }
 
-        static TileType from(@Nonnull String suffix) {
+        public static Orientation from(@Nonnull String suffix) {
             return Arrays.stream(values())
                 .filter(v -> suffix.matches(v.suffix))
                 .findFirst()

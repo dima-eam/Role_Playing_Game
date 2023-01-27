@@ -2,8 +2,12 @@ package org.eam.games.wanderer.ui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.concurrent.atomic.AtomicBoolean;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.eam.games.wanderer.actor.WithStats;
 import org.eam.games.wanderer.drawable.Drawable;
 import org.eam.games.wanderer.drawable.GraphicsContext;
@@ -12,8 +16,8 @@ import org.eam.games.wanderer.properties.GameProperties;
 /**
  * Represents heads-up display with game statistics etc.
  */
-@AllArgsConstructor
-public class Hud implements Drawable {
+@RequiredArgsConstructor
+public class Hud extends KeyAdapter implements Drawable {
 
     private static final int STAT_WIDTH = 330;
     private static final int STAT_HEIGHT = 55;
@@ -38,6 +42,8 @@ public class Hud implements Drawable {
     private final WithStats positionStats;
     private final WithStats monsterStats;
     private final AtomicBoolean gameOver = new AtomicBoolean();
+    private Runnable callback = () -> {
+    };
 
     @Override
     public void draw(GraphicsContext context) {
@@ -58,13 +64,24 @@ public class Hud implements Drawable {
 
                 g.setColor(Color.RED);
                 g.setFont(new Font("Courier", Font.PLAIN, GAMEOVER_SIZE));
-                g.drawString("You are Dead!!!", GAMEOVER_POSX, GAMEOVER_POSY);
+                g.drawString("You are Dead!!! Press F to start again", GAMEOVER_POSX, GAMEOVER_POSY);
             });
         }
     }
 
-    public void gameOver() {
+    @SneakyThrows
+    public void gameOver(Runnable callback) {
+        this.callback = callback;
         gameOver.set(true);
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (gameOver.get() && e.getKeyCode() == KeyEvent.VK_F) {
+            gameOver.set(false);
+            callback.run();
+        }
     }
 
 }

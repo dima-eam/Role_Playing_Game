@@ -1,21 +1,21 @@
-package org.eam.games.wanderer.world.tile;
+package org.eam.games.wanderer.engine.tile;
 
 import java.util.List;
 import java.util.Random;
 import lombok.AllArgsConstructor;
-import org.eam.games.wanderer.world.tile.OrientedTileset.TileType;
+import org.eam.games.wanderer.engine.tile.OrientedTileset.Orientation;
 
 /**
  * Randomized access to various tiles by direction.
  */
 @AllArgsConstructor
-public class Tiles {
+public class OrientedTiles {
 
     private static final Random RANDOM = new Random();
 
-    private final OrientedTileset tileset;
+    private final Tileset tileset;
 
-    public Tile nextTile(TileType type) {
+    public Tile nextTile(Orientation type) {
         List<Tile> tiles = tileset.tileset().get(type);
         if (tiles.size() == 1) {
             return tiles.get(0);

@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import lombok.AllArgsConstructor;
-import org.eam.games.wanderer.world.tile.Tiles;
+import org.eam.games.wanderer.engine.tile.OrientedTiles;
 
 @AllArgsConstructor
 class Rooms {
 
     private static final Random RANDOM = new Random();
 
-    private final Tiles tiles;
+    private final OrientedTiles tiles;
 
     /**
      * Creates rooms starting from the middle of the world, going four directions recursively.

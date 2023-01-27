@@ -52,13 +52,13 @@ public class WandererApp {
         Camera camera = new Camera(start, world, properties);
         Monsters monsters = new Monsters(world);
         Hud hud = new Hud(properties, hero, start, monsters);
-        MonstersDrawable monstersDrawable = new MonstersDrawable(monsters, properties);
+        MonstersDrawable monstersDrawable = new MonstersDrawable(monsters, properties.getTileSize());
         Display display = new Display(camera, worldDrawable, drawHero, hud, monstersDrawable);
         display.setDoubleBuffered(true); // todo move inside
         display.setBackground(Color.BLACK);
 
         Game.run(properties, display, new GameController(), new PlayerController(start, monsters),
-            new CombatController(start.getCurrent(), hero, monsters, hud));
+            new CombatController(start.getCurrent(), hero, monsters, hud), hud);
 
         log.info("Game initialized: properties={}", properties);
     }

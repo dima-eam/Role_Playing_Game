@@ -30,18 +30,24 @@ public class CombatController extends KeyAdapter {
     private void combatRound(Actor hero, Monster monster) {
         log.info("Combat round: hero={}, monster={}", hero, monster);
         hero.attack(monster);
-        monster.attack(hero);
-
-        if (hero.dead()) {
-            log.info("Game over");
-            hud.gameOver();
-        }
-
         if (monster.dead()) {
             log.info("Monster killed, getting stronger");
-            hero.getStronger();
+            hero.levelUp();
             monsters.getStronger();
+            return;
         }
+
+        monster.attack(hero);
+        if (hero.dead()) {
+            log.info("Game over");
+            hud.gameOver(this::reset);
+        }
+    }
+
+    private void reset() {
+        hero.reset();
+        monsters.reset();
+        heroPosition.reset();
     }
 
 }

@@ -1,4 +1,4 @@
-package org.eam.games.wanderer.world.tile;
+package org.eam.games.wanderer.engine.tile;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,10 +27,10 @@ public class TilesetFromFolder implements OrientedTileset {
         int begin = 1 + full.lastIndexOf("-");
         int end = full.lastIndexOf(".");
         String suffix = full.substring(begin, end);
-        TileType tileType = TileType.from(suffix);
+        Orientation orientation = Orientation.from(suffix);
 
-        tileset.putIfAbsent(tileType, new ArrayList<>());
-        tileset.get(tileType).add(tile);
+        tileset.putIfAbsent(orientation, new ArrayList<>());
+        tileset.get(orientation).add(tile);
     }
 
     @Override

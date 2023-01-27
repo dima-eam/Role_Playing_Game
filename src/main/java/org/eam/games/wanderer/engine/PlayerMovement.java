@@ -5,8 +5,8 @@ import java.util.function.Predicate;
 import lombok.extern.log4j.Log4j2;
 import org.eam.games.wanderer.actor.Direction;
 import org.eam.games.wanderer.actor.WithStats;
+import org.eam.games.wanderer.engine.tile.Tile;
 import org.eam.games.wanderer.world.World;
-import org.eam.games.wanderer.world.tile.Tile;
 
 /**
  * Encapsulates the current cell of player entity, and controls transition based on direction. Main purpose is movement
@@ -19,20 +19,17 @@ public class PlayerMovement extends AbstractMovement implements WithStats {
 
     private final World world;
 
-    private Direction direction;
-
-    private PlayerMovement(Position current, World world, Direction direction) {
-        super(current);
+    private PlayerMovement(Position current, Direction direction, World world) {
+        super(current, direction);
 
         this.world = world;
-        this.direction = direction;
     }
 
     /**
      * Initial position in given coordinates, face down. Currently, no coordinate checks are done.
      */
     public static PlayerMovement start(World world) {
-        return new PlayerMovement(Position.from(world.start()), world, Direction.DOWN);
+        return new PlayerMovement(Position.from(world.start()), Direction.DOWN, world);
     }
 
     /**
@@ -47,13 +44,6 @@ public class PlayerMovement extends AbstractMovement implements WithStats {
      */
     public int yTile() {
         return current.getYTile();
-    }
-
-    /**
-     * Current direction of an entity
-     */
-    public Direction direction() {
-        return direction;
     }
 
     @Override
@@ -75,7 +65,7 @@ public class PlayerMovement extends AbstractMovement implements WithStats {
         };
         Optional<Tile> tile = world.tileFor(next.getXTile(), next.getYTile());
         tile
-//            .filter(CAN_PASS)
+            .filter(CAN_PASS)
             .ifPresent(t -> current.moveTo(next));
         log.trace("Moving: direction={}, cell={}, nextTile={}", () -> direction, () -> current, () -> tile);
     }
