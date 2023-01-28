@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.TreeSet;
 import lombok.AllArgsConstructor;
 import org.eam.games.wanderer.engine.tile.OrientedTiles;
 
@@ -98,7 +99,7 @@ class Rooms {
     }
 
     private Set<String> directionsFrom(String direction) {
-        Set<String> directions = new HashSet<>();
+        Set<String> directions = new TreeSet<>(); // to preserve order after shuffling directions
         switch (direction) {
             case "S" -> directions.add("C");
             case "C" -> directions.addAll(shuffle(List.of("U", "D", "L", "R")));
