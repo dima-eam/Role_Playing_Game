@@ -36,9 +36,6 @@ public class Monsters implements WithStats {
                 stats.remove(monster.getMonster());
                 continue;
             }
-            if (monster.getCurrent().equals(player)) {
-                stats.add(monster.getMonster());
-            }
 
             monster.react();
         }
@@ -48,14 +45,6 @@ public class Monsters implements WithStats {
         monsters.stream()
             .filter(m -> !m.getMonster().dead())
             .forEach(process);
-    }
-
-    public List<Monster> forCell(Position position) {
-        return monsters.stream()
-            .filter(m -> m.getCurrent().equals(position))
-            .map(MonsterMovement::getMonster)
-            .filter(m -> !m.dead())
-            .collect(Collectors.toList());
     }
 
     @Override
@@ -88,6 +77,23 @@ public class Monsters implements WithStats {
         monsters.clear();
 
         populateMonsters();
+    }
+
+    public List<Monster> aroundCell(Position position) {
+        return monsters.stream()
+            .filter(m -> around(m.getCurrent(), (position)))
+            .map(MonsterMovement::getMonster)
+            .filter(m -> !m.dead())
+            .peek(stats::add)
+            .collect(Collectors.toList());
+    }
+
+    private boolean around(Position monster, Position position) {
+        if (monster.equals(position)) {
+            return true;
+        }
+        return Math.abs(monster.getXTile() - position.getXTile()) < 2
+            && Math.abs(monster.getYTile() - position.getYTile()) < 2;
     }
 
 }

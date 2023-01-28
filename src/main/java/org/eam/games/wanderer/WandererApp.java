@@ -3,6 +3,7 @@ package org.eam.games.wanderer;
 import com.google.common.base.Stopwatch;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.log4j.Log4j2;
 import org.eam.games.wanderer.actor.Actor;
@@ -57,8 +58,8 @@ public class WandererApp {
         display.setDoubleBuffered(true); // todo move inside
         display.setBackground(Color.BLACK);
 
-        Game.run(properties, display, new GameController(), new PlayerController(start, monsters),
-            new CombatController(start.getCurrent(), hero, monsters, hud), hud);
+        Game.run(properties, display, List.of(new GameController(), new PlayerController(start, monsters),
+            hud), List.of(new CombatController(start.getCurrent(), hero, monsters, hud)));
 
         log.info("Game initialized: properties={}", properties);
     }

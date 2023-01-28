@@ -49,7 +49,7 @@ Face Right ![Hero Face Right](src/main/resources/tiles/hero-right.gif)
 
 ### Game Screenshot
 
-![Game Screenshot](Game_Screenshot.png)
+![Game Screenshot](screenshot.jpg)
 
 ## Engine implementation
 

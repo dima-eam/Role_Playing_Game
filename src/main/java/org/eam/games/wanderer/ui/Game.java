@@ -1,7 +1,7 @@
 package org.eam.games.wanderer.ui;
 
 import java.awt.event.KeyAdapter;
-import java.util.Arrays;
+import java.awt.event.MouseAdapter;
 import javax.swing.JFrame;
 import org.eam.games.wanderer.engine.GameTimer;
 import org.eam.games.wanderer.properties.GameProperties;
@@ -12,10 +12,12 @@ import org.eam.games.wanderer.properties.GameProperties;
  */
 public class Game extends JFrame {
 
-    public static void run(GameProperties properties, Display display, KeyAdapter... listeners) {
+    public static void run(GameProperties properties, Display display,
+        Iterable<KeyAdapter> keyAdapters, Iterable<MouseAdapter> mouseAdapters) {
         Game game = new Game();
         game.add(display);
-        Arrays.stream(listeners).forEach(game::addKeyListener);
+        keyAdapters.forEach(game::addKeyListener);
+        mouseAdapters.forEach(game::addMouseListener);
 
         game.setSize(properties.getScreenSize());
         game.setUndecorated(true);

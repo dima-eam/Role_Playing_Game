@@ -18,7 +18,7 @@ import lombok.ToString;
 @ToString
 public class GameProperties {
 
-    private static final int DEFAULT_TILE_SIZE = 72;
+    private static final int DEFAULT_TILE_SIZE = 48;
 
     @Nonnull
     private final Dimension screenSize;
