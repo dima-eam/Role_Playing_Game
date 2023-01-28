@@ -1,7 +1,7 @@
 package org.eam.games.wanderer.engine;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -18,33 +18,24 @@ public class Monsters implements WithStats {
     private final Set<WithStats> stats = new HashSet<>();
 
     private final World world;
-    private final List<MonsterMovement> monsters;
+    private final Set<MonsterMovement> monsters;
     private final int monsterAmount;
 
     public Monsters(World world) {
         this.world = world;
 
         monsterAmount = COUNT;
-        monsters = new ArrayList<>(monsterAmount);
+        monsters = new HashSet<>(monsterAmount);
 
         populateMonsters();
     }
 
     public void react(Position player) {
-        for (MonsterMovement monster : monsters) {
-            if (monster.getMonster().dead()) {
-                stats.remove(monster.getMonster());
-                continue;
-            }
-
-            monster.react();
-        }
+        monsters.forEach(MonsterMovement::react);
     }
 
     public void forEach(Consumer<MonsterMovement> process) {
-        monsters.stream()
-            .filter(m -> !m.getMonster().dead())
-            .forEach(process);
+        monsters.forEach(process);
     }
 
     @Override
@@ -52,6 +43,33 @@ public class Monsters implements WithStats {
         return stats.stream()
             .map(WithStats::stats)
             .collect(Collectors.joining(","));
+    }
+
+    public void getStronger() {
+        Iterator<MonsterMovement> iterator = monsters.iterator();
+        iterator.forEachRemaining(m -> {
+            if (m.getMonster().dead()) {
+                iterator.remove();
+                stats.remove(m.getMonster());
+            } else {
+                m.getMonster().levelUp();
+            }
+        });
+    }
+
+    public void reset() {
+        monsters.clear();
+        stats.clear();
+
+        populateMonsters();
+    }
+
+    public List<Monster> aroundCell(Position position) {
+        return monsters.stream()
+            .filter(m -> around(m.getCurrent(), (position)))
+            .map(MonsterMovement::getMonster)
+            .peek(stats::add)
+            .collect(Collectors.toList());
     }
 
     private void populateMonsters() {
@@ -62,30 +80,6 @@ public class Monsters implements WithStats {
 //        monsters.add(new MonsterMovement(world.findEmptyTile(), keyMonster));
 //        BossMonster boss = new BossMonster(2);
 //        monsters.add(new MonsterMovement(world.findEmptyTile(), boss));
-    }
-
-    public void getStronger() {
-        for (MonsterMovement monster : monsters) {
-            if (monster.getMonster().dead()) {
-                continue;
-            }
-            monster.getMonster().levelUp();
-        }
-    }
-
-    public void reset() {
-        monsters.clear();
-
-        populateMonsters();
-    }
-
-    public List<Monster> aroundCell(Position position) {
-        return monsters.stream()
-            .filter(m -> around(m.getCurrent(), (position)))
-            .map(MonsterMovement::getMonster)
-            .filter(m -> !m.dead())
-            .peek(stats::add)
-            .collect(Collectors.toList());
     }
 
     private boolean around(Position monster, Position position) {

@@ -35,6 +35,7 @@ public class Player extends Actor {
         super.reset();
 
         maxHealthPoint = 20 + 3 * rollDice();
+        healthPoint = maxHealthPoint;
         defendPoint = 2 * rollDice();
         strikePoint = 5 + rollDice();
     }

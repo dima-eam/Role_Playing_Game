@@ -52,7 +52,7 @@ public class WandererApp {
         Drawable drawHero = new PlayerDrawable(hero, properties.getTileSize(), start);
         Camera camera = new Camera(start, world, properties);
         Monsters monsters = new Monsters(world);
-        Hud hud = new Hud(properties, hero, start, monsters);
+        Hud hud = new Hud(hero, start, monsters);
         MonstersDrawable monstersDrawable = new MonstersDrawable(monsters, properties.getTileSize());
         Display display = new Display(camera, worldDrawable, drawHero, hud, monstersDrawable);
         display.setDoubleBuffered(true); // todo move inside

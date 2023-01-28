@@ -5,13 +5,11 @@ import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.concurrent.atomic.AtomicBoolean;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.eam.games.wanderer.actor.WithStats;
 import org.eam.games.wanderer.drawable.Drawable;
 import org.eam.games.wanderer.drawable.GraphicsContext;
-import org.eam.games.wanderer.properties.GameProperties;
 
 /**
  * Represents heads-up display with game statistics etc.
@@ -37,7 +35,6 @@ public class Hud extends KeyAdapter implements Drawable {
     private static final int GAMEOVER_POSX = GAMEOVER_BOX_POSX + 5;
     private static final int GAMEOVER_POSY = GAMEOVER_BOX_POSY + GAMEOVER_SIZE;
 
-    private final GameProperties properties;
     private final WithStats playerStats;
     private final WithStats positionStats;
     private final WithStats monsterStats;
