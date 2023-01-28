@@ -18,7 +18,7 @@ import lombok.ToString;
 @ToString
 public class GameProperties {
 
-    private static final int DEFAULT_TILE_SIZE = 72;
+    private static final int DEFAULT_TILE_SIZE = 48;
 
     @Nonnull
     private final Dimension screenSize;
@@ -41,8 +41,8 @@ public class GameProperties {
     public static GameProperties defaults() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-        int widthInTiles = 1 + screenSize.width / DEFAULT_TILE_SIZE;
-        int heightInTiles = screenSize.height / DEFAULT_TILE_SIZE;
+        int widthInTiles =  screenSize.width / DEFAULT_TILE_SIZE;
+        int heightInTiles =  screenSize.height / DEFAULT_TILE_SIZE;
 
         return GameProperties.builder()
             .screenSize(screenSize)

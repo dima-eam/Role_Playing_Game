@@ -32,11 +32,11 @@ public class Camera {
     }
 
     public int xOffset(int xTile) {
-        return offset(xTile, properties.getWidthInTiles() / 2, world.widthInTiles());
+        return offset(xTile, properties.getWidthInTiles() >> 1, world.widthInTiles());
     }
 
     public int yOffset(int yTile) {
-        return offset(yTile, properties.getHeightInTiles() / 2, world.heightInTiles());
+        return offset(yTile, properties.getHeightInTiles() >> 1, world.heightInTiles());
     }
 
     /**
@@ -51,7 +51,7 @@ public class Camera {
             return coordinate - threshold;
         }
 
-        return boundary - 2 * threshold - 1;
+        return boundary - 2 * threshold;
     }
 
 }

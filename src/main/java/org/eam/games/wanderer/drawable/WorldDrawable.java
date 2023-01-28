@@ -19,8 +19,8 @@ public class WorldDrawable implements Drawable {
 
     @Override
     public void draw(GraphicsContext context) {
-        for (int i = 0; i < properties.getWidthInTiles(); i++) {
-            for (int j = 0; j < properties.getHeightInTiles(); j++) {
+        for (int i = 0; i <= properties.getWidthInTiles(); i++) {
+            for (int j = 0; j <= properties.getHeightInTiles(); j++) {
                 extracted(context, i, j);
             }
         }
