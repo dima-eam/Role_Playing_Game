@@ -8,6 +8,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import org.eam.games.wanderer.actor.Monster;
 import org.eam.games.wanderer.actor.WithStats;
+import org.eam.games.wanderer.properties.GameProperties;
 import org.eam.games.wanderer.world.World;
 
 public class Monsters implements WithStats {
@@ -17,11 +18,13 @@ public class Monsters implements WithStats {
 
     private final Set<WithStats> stats = new HashSet<>();
 
+    private final GameProperties properties;
     private final World world;
     private final Set<MonsterMovement> monsters;
     private final int monsterAmount;
 
-    public Monsters(World world) {
+    public Monsters(GameProperties properties, World world) {
+        this.properties = properties;
         this.world = world;
 
         monsterAmount = COUNT;
@@ -74,7 +77,7 @@ public class Monsters implements WithStats {
 
     private void populateMonsters() {
         for (int i = 0; i < monsterAmount; i++) {
-            monsters.add(new MonsterMovement(new Monster(), world));
+            monsters.add(new MonsterMovement(properties.getTileSize(), new Monster(), world));
         }
 //        Monster keyMonster = new Monster(1);
 //        monsters.add(new MonsterMovement(world.findEmptyTile(), keyMonster));

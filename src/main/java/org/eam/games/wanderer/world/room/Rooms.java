@@ -3,7 +3,6 @@ package org.eam.games.wanderer.world.room;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -65,9 +64,11 @@ class Rooms {
             return false;
         }
 
+        int distance = 8;
         return rooms.stream()
             .map(Room::startCell)
-            .anyMatch(c -> Math.abs(c.getX() - nextRoom.getX()) < 10 && Math.abs(c.getY() - nextRoom.getY()) < 10);
+            .anyMatch(c -> Math.abs(c.getX() - nextRoom.getX()) < distance
+                && Math.abs(c.getY() - nextRoom.getY()) < distance);
     }
 
     private void addPassage(String direction, Room prevRoom, Room room, List<Room> rooms) {

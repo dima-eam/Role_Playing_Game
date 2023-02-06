@@ -28,7 +28,7 @@ public class Camera {
 
         log.trace("Camera offsets: xOffset={}, yOffset={}", () -> xOffset, () -> yOffset);
 
-        return GraphicsContext.from(graphics, xOffset, yOffset);
+        return GraphicsContext.from(graphics, xOffset, yOffset, properties.getTileSize());
     }
 
     public int xOffset(int xTile) {

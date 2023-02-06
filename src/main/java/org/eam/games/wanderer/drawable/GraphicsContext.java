@@ -20,20 +20,21 @@ public class GraphicsContext {
     private final int xOffset;
     @Getter
     private final int yOffset;
+    private final int tileSize;
 
-    public static GraphicsContext from(Graphics graphics, int xOffset, int yOffset) {
-        return new GraphicsContext(graphics, xOffset, yOffset);
+    public static GraphicsContext from(Graphics graphics, int xOffset, int yOffset, int tileSize) {
+        return new GraphicsContext(graphics, xOffset, yOffset, tileSize);  // todo create an single  mutable instance
     }
 
     /**
      * Process the graphics context, enclosed in caller's execution context.
      */
-    public void process(Image image, int x, int y, int size) {
-        graphics.drawImage(image, x, y, size, size, null);
+    public void process(Image image, int x, int y) {
+        graphics.drawImage(image, x, y, tileSize, tileSize, null);
     }
 
     /**
-     * Process the graphics context, enclosed in caller's execution context.
+     * Process the graphics context, enclosed in caller's execution context, e.g. to draw status messages.
      */
     public void process(Consumer<Graphics> logic) {
         logic.accept(graphics);

@@ -19,8 +19,8 @@ public class PlayerMovement extends AbstractMovement implements WithStats {
 
     private final World world;
 
-    private PlayerMovement(Position current, Direction direction, World world) {
-        super(current, direction);
+    private PlayerMovement(int tileSize, Position current, Direction direction, World world) {
+        super(tileSize, current, direction);
 
         this.world = world;
     }
@@ -28,8 +28,8 @@ public class PlayerMovement extends AbstractMovement implements WithStats {
     /**
      * Initial position in given coordinates, face down. Currently, no coordinate checks are done.
      */
-    public static PlayerMovement start(World world) {
-        return new PlayerMovement(Position.from(world.start()), Direction.DOWN, world);
+    public static PlayerMovement start(int tileSize, World world) {
+        return new PlayerMovement(tileSize, Position.from(world.start()), Direction.DOWN, world);
     }
 
     /**

@@ -14,8 +14,8 @@ public class MonsterMovement extends AbstractMovement {
     private final Monster monster;
     private final World world;
 
-    MonsterMovement(Monster monster, World world) {
-        super(Position.from(world.walkableCell()), Direction.DOWN);
+    MonsterMovement(int tileSize, Monster monster, World world) {
+        super(tileSize, Position.from(world.walkableCell()), Direction.DOWN);
 
         this.monster = monster;
         this.world = world;

@@ -30,8 +30,7 @@ public class WorldDrawable implements Drawable {
         world.tileFor(x + context.getXOffset(), y + context.getYOffset())
             .ifPresent(t -> context.process(t.getTileImage(),
                 x * properties.getTileSize(),
-                y * properties.getTileSize(),
-                properties.getTileSize()));
+                y * properties.getTileSize()));
     }
 
 }

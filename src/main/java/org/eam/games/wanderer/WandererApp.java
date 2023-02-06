@@ -48,12 +48,12 @@ public class WandererApp {
 
         Drawable worldDrawable = new WorldDrawable(properties, world);
         Actor hero = new Player();
-        PlayerMovement start = PlayerMovement.start(world);
+        PlayerMovement start = PlayerMovement.start(properties.getTileSize(), world);
         Drawable drawHero = new PlayerDrawable(hero, properties.getTileSize(), start);
         Camera camera = new Camera(start, world, properties);
-        Monsters monsters = new Monsters(world);
+        Monsters monsters = new Monsters(properties, world);
         Hud hud = new Hud(hero, start, monsters);
-        MonstersDrawable monstersDrawable = new MonstersDrawable(monsters, properties.getTileSize());
+        MonstersDrawable monstersDrawable = new MonstersDrawable(monsters);
         Display display = new Display(camera, worldDrawable, drawHero, hud, monstersDrawable);
         display.setDoubleBuffered(true); // todo move inside
         display.setBackground(Color.BLACK);

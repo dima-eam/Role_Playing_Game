@@ -7,12 +7,11 @@ import org.eam.games.wanderer.engine.Monsters;
 public class MonstersDrawable implements Drawable {
 
     private final Monsters monsters;
-    private final int step;
 
     @Override
     public void draw(GraphicsContext context) {
-        monsters.forEach(m -> context.process(m.image(), m.xOffset(context.getXOffset(), step),
-            m.yOffset(context.getYOffset(), step), step));
+        monsters.forEach(m -> context.process(m.image(), m.xOffset(context.getXOffset()),
+            m.yOffset(context.getYOffset())));
     }
 
 }
