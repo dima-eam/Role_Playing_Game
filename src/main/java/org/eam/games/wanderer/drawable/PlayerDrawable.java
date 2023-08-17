@@ -13,7 +13,6 @@ import org.eam.games.wanderer.engine.PlayerMovement;
 public class PlayerDrawable implements Drawable {
 
     private final Actor actor;
-    private final int step;
     private final PlayerMovement movement;
 
     /**

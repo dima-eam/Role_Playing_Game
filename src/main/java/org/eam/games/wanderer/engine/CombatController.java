@@ -19,7 +19,6 @@ public class CombatController extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
         monsters.aroundCell(heroPosition)
             .forEach(m -> combatRound(hero, m));
     }

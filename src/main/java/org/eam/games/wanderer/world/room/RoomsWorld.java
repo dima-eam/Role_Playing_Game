@@ -13,7 +13,9 @@ import org.eam.games.wanderer.world.Cell;
 import org.eam.games.wanderer.world.World;
 
 /**
- * Represents game world as a set of randomly generated rooms.
+ * Represents game world as a set of randomly generated rooms. Generation uses its own coordinate system, where (0, 0)
+ * is the central room of the world, and every new room is generated in one of four possible directions. After
+ * generation is done, coordinates are transformed into rectangular grid, starting from top-left corner.
  */
 @Log4j2
 public final class RoomsWorld implements World {

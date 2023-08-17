@@ -1,7 +1,6 @@
 package org.eam.games.wanderer;
 
 import com.google.common.base.Stopwatch;
-import java.awt.Color;
 import java.awt.EventQueue;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -54,7 +53,7 @@ public class WandererApp {
         Drawable worldDrawable = new WorldDrawable(properties, world);
         Actor hero = new Player();
         PlayerMovement player = PlayerMovement.start(properties.getTileSize(), world);
-        Drawable drawHero = new PlayerDrawable(hero, properties.getTileSize(), player);
+        Drawable drawHero = new PlayerDrawable(hero, player);
         Camera camera = new Camera(player, world, properties);
         Monsters monsters = new Monsters(properties, world);
         Hud hud = new Hud(hero, player, monsters);

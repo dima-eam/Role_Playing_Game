@@ -18,7 +18,7 @@ public class PlayerMovement extends ActorMovement implements WithStats {
     private static final Predicate<Tile> CAN_PASS = tile -> !tile.isSolid();
 
     private PlayerMovement(int tileSize, Position current, Direction direction, World world) {
-        super(tileSize, current, direction,world);
+        super(tileSize, current, direction, world);
     }
 
     /**

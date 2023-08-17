@@ -10,7 +10,9 @@ import org.eam.games.wanderer.engine.tile.Tile;
 public interface World {
 
     /**
-     * Returns a walkable cell (the one where a monster/player can stay/walk), primarily for placing entities.
+     * Returns a walkable cell (the one where a monster/player can stay/walk), primarily for placing entities. There is
+     * no restrictions on choosing the cell, it might be random. "Walkability" is controlled by {@link Tile#isSolid()}
+     * property, and should be false.
      */
     Cell walkableCell();
 
@@ -20,6 +22,9 @@ public interface World {
      */
     Optional<Tile> tileForCell(Cell newCell);
 
+    /**
+     * Same as above but for coordinates, e.g. when calculating offset for a camera.
+     */
     default Optional<Tile> tileFor(int xTile, int yTile) {
         return tileForCell(new Cell(xTile, yTile));
     }
@@ -28,8 +33,11 @@ public interface World {
 
     int heightInTiles();
 
+    /**
+     * Default start position is random walkable cell.
+     */
     default Cell start() {
-        return new Cell(0, 0);
+        return walkableCell();
     }
 
 }
