@@ -9,7 +9,13 @@ import java.util.Set;
 import java.util.TreeSet;
 import lombok.AllArgsConstructor;
 import org.eam.games.wanderer.engine.tile.OrientedTiles;
+import org.eam.games.wanderer.engine.tile.Tileset;
 
+/**
+ * Encapsulates rooms generation logic, using provided {@link Tileset}. Generation start from the middle of the world,
+ * and recursively adds neighbor rooms until depth limit is reached. The result is a set of rooms connected with narrow
+ * corridors. The result is {@link GeneratedRooms} instance with all the rooms and additional data.
+ */
 @AllArgsConstructor
 class Rooms {
 

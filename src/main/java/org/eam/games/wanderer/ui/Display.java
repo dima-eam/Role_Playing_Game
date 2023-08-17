@@ -1,13 +1,17 @@
 package org.eam.games.wanderer.ui;
 
 import com.google.common.base.Stopwatch;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.concurrent.TimeUnit;
+import javax.annotation.Nonnull;
 import javax.swing.JPanel;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.eam.games.wanderer.drawable.Drawable;
 import org.eam.games.wanderer.drawable.GraphicsContext;
+import org.eam.games.wanderer.drawable.MonstersDrawable;
 import org.eam.games.wanderer.engine.Camera;
 
 /**
@@ -15,14 +19,31 @@ import org.eam.games.wanderer.engine.Camera;
  * passing {@link Graphics} instances to every drawable object to update.
  */
 @Log4j2
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Display extends JPanel {
 
+    @Nonnull
     private final Camera camera;
+    @Nonnull
     private final Drawable world;
+    @Nonnull
     private final Drawable hero;
+    @Nonnull
     private final Drawable hud;
+    @Nonnull
     private final Drawable monsters;
+
+    public static Display from(@Nonnull Camera camera,
+        @Nonnull Drawable worldDrawable,
+        @Nonnull Drawable drawHero,
+        @Nonnull Hud hud,
+        @Nonnull MonstersDrawable monstersDrawable) {
+        Display display = new Display(camera, worldDrawable, drawHero, hud, monstersDrawable);
+        display.setDoubleBuffered(true);
+        display.setBackground(Color.BLACK);
+
+        return display;
+    }
 
     /**
      * Initially paints the whole game, and repaints by timer.

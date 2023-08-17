@@ -1,6 +1,8 @@
 package org.eam.games.wanderer.engine;
 
 import java.awt.Image;
+import java.util.Objects;
+import javax.annotation.Nonnull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.eam.games.wanderer.actor.Direction;
@@ -9,16 +11,15 @@ import org.eam.games.wanderer.engine.tile.Tile;
 import org.eam.games.wanderer.world.World;
 
 @Getter
-public class MonsterMovement extends AbstractMovement {
+public class MonsterMovement extends ActorMovement {
 
+    @Nonnull
     private final Monster monster;
-    private final World world;
 
-    MonsterMovement(int tileSize, Monster monster, World world) {
-        super(tileSize, Position.from(world.walkableCell()), Direction.DOWN);
+    MonsterMovement(int tileSize, @Nonnull Monster monster, @Nonnull World world) {
+        super(tileSize, Position.from(world.walkableCell()), Direction.DOWN, world);
 
-        this.monster = monster;
-        this.world = world;
+        this.monster = Objects.requireNonNull(monster, "Monster is null");
     }
 
     public Image image() {

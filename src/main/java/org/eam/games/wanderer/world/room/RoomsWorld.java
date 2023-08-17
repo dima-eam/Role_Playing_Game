@@ -13,8 +13,7 @@ import org.eam.games.wanderer.world.Cell;
 import org.eam.games.wanderer.world.World;
 
 /**
- * Represents game world as sequence of randomly generated rooms. There is an external boundary, which may be considered
- * as room, too.
+ * Represents game world as a set of randomly generated rooms.
  */
 @Log4j2
 public final class RoomsWorld implements World {

@@ -1,6 +1,6 @@
 package org.eam.games.wanderer.faction;
 
-public class MonsterFaction implements Faction{
+public class MonsterFaction implements Faction {
 
     MonsterRoles monsterRoles;
 

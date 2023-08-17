@@ -15,8 +15,8 @@ public class OrientedTiles {
 
     private final Tileset tileset;
 
-    public Tile nextTile(Orientation type) {
-        List<Tile> tiles = tileset.tileset().get(type);
+    public Tile nextTile(Orientation orientation) {
+        List<Tile> tiles = tileset.tileset().get(orientation);
         if (tiles.size() == 1) {
             return tiles.get(0);
         }

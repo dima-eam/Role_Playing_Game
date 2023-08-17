@@ -2,6 +2,7 @@ package org.eam.games.wanderer.engine;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import lombok.AllArgsConstructor;
 import org.eam.games.wanderer.actor.Direction;
 

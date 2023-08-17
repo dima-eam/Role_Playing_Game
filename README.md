@@ -7,15 +7,16 @@ boss, who holds the key to the next level, and find a door which opens it.
 ## Main concepts
 
 1. Hero can move in four directions, and attack a monster if they share the same cell.
-2. Hero can only move by grass, walls are "solid", and cannot be passed _(some mechanics can be added later, e.g.
+2. Hero can only move on floor, walls are "solid", and cannot be passed _(some mechanics can be added later, e.g.
    climbing or destroying the walls, or having secret passes)._
 3. Monsters AI is reactive, meaning:
-    * Monsters move at the same time as hero moves, and their AI is very simple, randomly picking grass tile from
+    * Monsters move at the same time as hero moves, and their AI is very simple, randomly picking floor tile from
       adjacent _(group behaviour and path finding, following etc. can be added later)._
     * Each hero's attack is counterattacking by the monster at the same time _(attack speed modifiers can be added
       later)_.
-4.
-5.
+4. After killing some monsters, a boss monster spawns, and drops a key to the next level upon death.
+5. Hero must find a door to unlock the next level.
+6. Next level is another dungeon of the same type _(later additional tiles will be added, and new layouts)_
 
 ### Move
 
@@ -65,3 +66,4 @@ turn.
 5. Inject everything that may be configurable: counts, file paths, sizes, etc
 6. Think about Z-axis implementation, with stairs and displaying only particular elevation level rooms
 7. multi-tile entities
+8. Random monster affixes e.g. snake poison with animate dead effect
